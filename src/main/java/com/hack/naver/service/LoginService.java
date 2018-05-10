@@ -24,28 +24,28 @@ public class LoginService {
 	public void insertUser(String id, String a, String b, String c) {
 		Map<String, Object> map = new HashMap<String,Object>();
 		
-		List<Object> list=new ArrayList<Object>();
+		List<User> list=new ArrayList<User>();
 		User user;
 		if(a!=null) {
 			user=new User();
 			user.setId(id);
-			user.setGroup("A");
+			user.setElement("A");
 			list.add(user);
 		}
 		if(b!=null) {
 			user=new User();
 			user.setId(id);
-			user.setGroup("B");
+			user.setElement("B");
 			list.add(user);
 		}
 		if(c!=null) {
 			user=new User();
 			user.setId(id);
-			user.setGroup("C");
+			user.setElement("C");
 			list.add(user);
 		}
 		map.put("list", list);
-		loginDao.insertUser(id,map);
+		loginDao.insertUser(map);
 		
 	}
 }

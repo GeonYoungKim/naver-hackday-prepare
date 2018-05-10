@@ -2,20 +2,18 @@ package com.hack.naver.model;
 
 public class User {
 	private String id;
-	private String group;
+	private String element;
 	public String getId() {
 		return id;
 	}
 	public void setId(String id) {
 		this.id = id;
 	}
-	public String getGroup() {
-		return group;
+	public String getElement() {
+		return element;
 	}
-	public void setGroup(String group) {
-		this.group = group;
+	public void setElement(String element) {
+		this.element = element;
 	}
 	
-	
-
 }

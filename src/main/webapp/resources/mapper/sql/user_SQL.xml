@@ -4,14 +4,11 @@
 <mapper namespace="user">
 
 	<insert id="membership" parameterType="java.util.Map">
-		<![CDATA[
-			INSERT INTO
-			 naver_hack.login (id,group)
-			VALUES 
-			<foreach collection="list" item="item" separator=" , ">
-            	(#{item.id},#{item.group})
-        	</foreach>
-		]]>
+		INSERT INTO
+		 naver_hack.login (id,element)
+		VALUES 
+		<foreach collection="list" item="item" separator=" , ">
+            (#{item.id}, #{item.element})
+        </foreach>
 	</insert>
-
 </mapper>
