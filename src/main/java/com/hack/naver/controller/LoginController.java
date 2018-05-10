@@ -1,6 +1,8 @@
 package com.hack.naver.controller;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -29,16 +31,19 @@ public class LoginController{
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST,produces="text/plain;charset=UTF-8")
-	public void login(HttpServletRequest request) throws UnsupportedEncodingException {
+	public @ResponseBody void login(HttpServletRequest request) throws UnsupportedEncodingException {
 		request.setCharacterEncoding("UTF-8");
+		List<String> elementList=new ArrayList<String>();
 		
 		String id=request.getParameter("id");
 		
-		String A=request.getParameter("A");
-		String B=request.getParameter("B");
-		String C=request.getParameter("C");
-		
-		loginService.insertUser(id,A,B,C);
+		String A=(request.getParameter("A")!=null)?"A":"NO";
+		String B=(request.getParameter("B")!=null)?"B":"NO";
+		String C=(request.getParameter("C")!=null)?"C":"NO";
+		elementList.add(A);
+		elementList.add(B);
+		elementList.add(C);
+		loginService.login(id,elementList);
 		
 	}
 

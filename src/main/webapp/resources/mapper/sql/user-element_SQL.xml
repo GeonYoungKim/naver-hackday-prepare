@@ -1,22 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="user">
+<mapper namespace="user_element">
 
-	<select id="select_by_id" parameterType="String" resultType="hashmap">
-		SELECT * FROM
-			naver_hack.user
-		WHERE
-			id=#{id};
-	</select>
-
-	<insert id="insertOne" parameterType="String">
-		INSERT INTO naver_hack.user
-		  (id) 
-		 VALUES 
-		  (#{id});
-	</insert>
-	<insert id="user_element" parameterType="java.util.Map">
+	
+	<insert id="insert" parameterType="java.util.Map">
 		INSERT INTO
 		 naver_hack.user_element (id,element)
 		VALUES 
@@ -24,4 +12,10 @@
             (#{item.id}, #{item.element})
         </foreach>
 	</insert>
+	<delete id="delete" parameterType="String">
+	DELETE FROM 
+		naver_hack.user_element 
+	WHERE 
+		id=#{id};
+	</delete>
 </mapper>

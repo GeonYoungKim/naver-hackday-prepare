@@ -12,8 +12,23 @@ import com.hack.naver.model.User;
 @Repository("LoginDao")
 public class LoginDao extends ConnectDB{
 
-	public void insertUser(Map<String, Object> map) {
-		insert("user.membership", map);
+	public Map<String,Object> selectOneUser(String id) {
+		return (Map<String,Object>)selectOne("user.select_by_id", id);
+	}
+
+	public void insertOneUser(String id) {
+		insert("user.insertOne", id);
+		
+	}
+
+	public void insertUserElement(Map<String, Object> map) {
+		insert("user_element.insert",map);
+		
+	}
+
+	public void deleteUserElement(String id) {
+		delete("user_element.delete", id);
+		
 	}
 
 	
