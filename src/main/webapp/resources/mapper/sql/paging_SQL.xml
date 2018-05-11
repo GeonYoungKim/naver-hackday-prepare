@@ -3,9 +3,9 @@
 
 <mapper namespace="paging">
 
-	<select id="selectList" parameterType="Integer" resultType="hashmap">
+	<select id="selectList" parameterType="com.hack.naver.model.Paging" resultType="hashmap">
 		SELECT num,content
 		FROM paging
-		ORDER BY num DESC LIMIT #{id},10;
+		ORDER BY num DESC LIMIT #{no},#{unit};
 	</select>
 </mapper>

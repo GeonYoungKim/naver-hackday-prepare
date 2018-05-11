@@ -20,12 +20,15 @@ public class PagingController {
 	
 	@RequestMapping(value = "/paging", method = RequestMethod.GET)
 	public String paging(HttpServletRequest request) {
+		int unit=10;
 		int pagingNo=1;
 		try{
+			unit=Integer.parseInt(request.getParameter("unit"));
 			pagingNo=Integer.parseInt(request.getParameter("no"));
 		}catch (Exception e) { 			
 		}
-		Map<String, Object> map=pagingDao.select(pagingNo);
+		
+		Map<String, Object> map=pagingDao.select(pagingNo,unit);
 		request.setAttribute("map", map);
 		return "paging";
 	}

@@ -35,10 +35,11 @@
 
 <body>
 
-<div class="wrap">
-    <textarea id="content" rows="40" cols="50" maxlength="1000" ></textarea>
-    <span id="counter">###</span>
-</div>
+	<div class="wrap">
+	    <textarea id="content" rows="40" cols="50" maxlength="1000" ></textarea>
+	    <span id="counter">###</span>
+	</div>
+	
 </body>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 <script>

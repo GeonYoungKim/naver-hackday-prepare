@@ -36,7 +36,29 @@
 			<%} %>
 		</tr>
 	</table>
-	
+	<form action="/naver/paging">
+		<table CELLPADDING="10" ALIGN="center">
+			<tr>
+				<td>
+					<select id="unit"" name="unit" onchange="chageLangSelect()">
+						<option disabled selected>단위를 지정해 주세요</option>
+						<option value="10">10</option>
+						<option value="15">15</option>
+						<option value="20">20</option>
+					</select>
+	            </tr>
+		</table>
+	</form>
 		<button type="submit" onclick="location.href='/naver/insert-notice'">공지사항 추가</button>
 	</body>
+<script>
+function chageLangSelect(){
+    var unitSelect = document.getElementById("unit");
+    // select element에서 선택된 option의 value가 저장된다.
+    var selectValue = unitSelect.options[unitSelect.selectedIndex].value;
+    location.href = "/naver/paging?no=1&unit="+selectValue;
+    
+ 	   
+}
+</script>
 </html>
