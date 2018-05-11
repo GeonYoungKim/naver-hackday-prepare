@@ -22,12 +22,21 @@
 		
 		<TR>
 			<TH align="center" WIDTH="70"><%=((List<Map<String,Object>>)map.get("tableList")).get(i).get("content") %></TH>
-		<TR>
+		</TR>
 		<%
 			}
 		%>
-		
-		
+	</table>
+	<table>
+		<tr>
+			<%
+				for (int i = 0; i < ((List) map.get("footerList")).size(); i++) {
+			%>
+			<td><a href="/naver/paging?no=<%=((List) map.get("footerList")).get(i)%>"><%=((List) map.get("footerList")).get(i)%></a></td>
+			<%} %>
+		</tr>
+	</table>
+	
 		<button type="submit" onclick="location.href='/naver/insert-notice'">공지사항 추가</button>
 	</body>
 </html>

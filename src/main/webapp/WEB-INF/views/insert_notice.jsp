@@ -8,7 +8,7 @@
 </head>
 <style>
 .wrap {
-    width: 300px;
+    width: 800px;
     height: auto;
     position: relative;
     display: inline-block;
@@ -33,22 +33,22 @@
 }
 </style>
 
-<script type="text/javascript">
-$(document).ready(function() {
-    $('#notice').on('keyup', function() {
-        if($(this).val().length > 10) {
-            $(this).val($(this).val().substring(0, 10));
-
-        }
-    });
-});
-</script>
 <body>
 
 <div class="wrap">
-    <textarea id="content" maxlength="300"></textarea>
+    <textarea id="content" rows="40" cols="50" maxlength="1000" ></textarea>
     <span id="counter">###</span>
 </div>
 </body>
-
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+<script>
+$(document).ready(function () {
+    $('#content').keyup(function (e){
+        var content = $(this).val();
+        $('#counter').html(content.length + '/1000');
+        $('#content').keyup();
+    });
+    
+});
+</script>
 </html>
