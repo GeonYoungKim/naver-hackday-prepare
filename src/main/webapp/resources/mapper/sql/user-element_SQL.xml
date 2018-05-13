@@ -18,4 +18,13 @@
 	WHERE 
 		id=#{id};
 	</delete>
+	
+	<select id="select" parameterType="String" resultType="hashmap">
+		SELECT 
+			* 
+		FROM 
+			naver_hack.user_element 
+		WHERE
+			id=#{id};
+	</select>
 </mapper>

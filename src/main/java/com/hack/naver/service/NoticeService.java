@@ -9,70 +9,76 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 import com.hack.naver.dao.NoticeDao;
 import com.hack.naver.model.Notice;
 import com.hack.naver.model.NoticeElement;
 import com.hack.naver.model.Paging;
-import com.hack.naver.model.User;
 
 @Service("NoticeService")
 public class NoticeService {
 	@Resource(name = "NoticeDao")
 	private NoticeDao noticeDao;
 
-	public Map<String, Object> select(int pagingNo,int unit) {
-		Paging paging=new Paging();
-		Map<String, Object> map=new HashMap<String, Object>();
-		List<Integer> footerList=new ArrayList<Integer>();
-		
-		int footerNo=pagingNo/unit;
-		if(pagingNo%10==0) {
-			for(int i=((footerNo-1)*unit)+1;i<=(footerNo)*unit;i++){
-				footerList.add(i);
-			}
-		}else {
-			for(int i=(footerNo*unit)+1;i<=(footerNo+1)*unit;i++){
-				footerList.add(i);
-			}	
+
+	
+	private void footerCompareAdd(int a, int b,List<Integer> footerList) {
+		if(a<b) {
+			footerList.add(a);
 		}
-		paging.setNo((pagingNo-1)*unit);
-		paging.setUnit(unit);
-		List<Map<String,Object>> tableList=noticeDao.selectPaging(paging);
+	}
+	public Map<String, Object> select(int pagingNo, int unit, List<Map<String, Object>> userElement) {
 		
+		Map<String, Object> map = new HashMap<String, Object>();
+		List<Integer> footerList = new ArrayList<Integer>();
+
+		map.put("no", (pagingNo - 1) * unit);
+		map.put("unit", unit);
+		map.put("userElement", userElement);
+		List<Map<String, Object>> tableList = noticeDao.selectPaging(map);
+
+		int footerNo = pagingNo / unit;
+		if (pagingNo % 10 == 0) {
+			for (int i = ((footerNo - 1) * unit) + 1; i <= (footerNo) * unit; i++) {
+				footerCompareAdd(i,tableList.size(),footerList);
+			}
+		} else {
+			for (int i = (footerNo * unit) + 1; i <= (footerNo + 1) * unit; i++) {
+				footerCompareAdd(i,tableList.size(),footerList);
+			}
+		}
+
 		map.put("pagingNo", pagingNo);
 		map.put("footerList", footerList);
 		map.put("tableList", tableList);
-		
+
 		return map;
 	}
-
+	
 	public void insertNotice(String id, List<String> elementList, String content) {
-		Notice notice=new Notice();
+		Notice notice = new Notice();
 		notice.setId(id);
 		notice.setContent(content);
 		noticeDao.insertNotice(notice);
-		
-		Map<String, Object> map = new HashMap<String,Object>();
-		List<NoticeElement> list=new ArrayList<NoticeElement>();
+
+		Map<String, Object> map = new HashMap<String, Object>();
+		List<NoticeElement> list = new ArrayList<NoticeElement>();
 		NoticeElement noticeElement;
-		int count=0;
-		for(int i=0;i<elementList.size();i++) {
-			if(elementList.get(i)!="NO"){
+		int count = 0;
+		for (int i = 0; i < elementList.size(); i++) {
+			if (elementList.get(i) != "NO") {
 				count++;
-				noticeElement=new NoticeElement();
+				noticeElement = new NoticeElement();
 				noticeElement.setNum(notice.getNum());
 				noticeElement.setElement(elementList.get(i).toString());
 				list.add(noticeElement);
 			}
 		}
-		if(count==0) {
+		if (count == 0) {
 			return;
 		}
 		map.put("list", list);
 		noticeDao.insertNoticeElement(map);
-		
+
 	}
 
 }

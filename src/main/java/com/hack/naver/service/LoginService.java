@@ -17,7 +17,9 @@ import com.hack.naver.model.User;
 public class LoginService {
 	@Resource(name = "LoginDao")
 	private LoginDao loginDao;
-
+	
+	
+	
 	private void insertUserElement(String id,List elementList) {
 	
 		Map<String, Object> map = new HashMap<String,Object>();
@@ -50,5 +52,10 @@ public class LoginService {
 			loginDao.insertOneUser(id);
 			insertUserElement(id,elementList);
 		}
+	}
+
+	public List<Map<String, Object>> getUserElement(String userId) {
+		
+		return loginDao.getUserElement(userId);
 	}
 }

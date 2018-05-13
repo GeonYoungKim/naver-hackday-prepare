@@ -7,22 +7,25 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.google.gson.JsonObject;
+import com.hack.naver.service.LoginService;
 import com.hack.naver.service.NoticeService;
 
 @Controller
 public class NoticeController {
 	@Resource(name = "NoticeService")
 	private NoticeService noticeService ;
-	
+	@Resource(name = "LoginService")
+	private LoginService loginService ;
 	
 	@RequestMapping(value = "/notice", method = RequestMethod.GET)
-	public String paging(HttpServletRequest request) {
+	public String paging(HttpServletRequest request,HttpSession sesstion) {
 		int unit=10;
 		
 		int pagingNo=1;
@@ -33,7 +36,9 @@ public class NoticeController {
 		}catch (Exception e) {
 		}
 		
-		Map<String, Object> map=noticeService.select(pagingNo,unit);
+		List<Map<String,Object>> userElement=loginService.getUserElement(((String)sesstion.getAttribute("userId")));
+		
+		Map<String, Object> map=noticeService.select(pagingNo,unit,userElement);
 		request.setAttribute("map", map);
 		request.setAttribute("unit", unit);
 		return "notice";
@@ -44,7 +49,7 @@ public class NoticeController {
 		return "insert_notice_form";
 	}
 	@RequestMapping(value = "/insert-notice", method = RequestMethod.POST,produces="text/plain;charset=UTF-8")
-	public void insertNotice(HttpServletRequest request) throws UnsupportedEncodingException {
+	public String insertNotice(HttpServletRequest request) throws UnsupportedEncodingException {
 		request.setCharacterEncoding("UTF-8");
 		List<String> elementList=new ArrayList<String>();
 		String id=request.getParameter("userId");
@@ -57,6 +62,6 @@ public class NoticeController {
 		elementList.add(B);
 		elementList.add(C);
 		noticeService.insertNotice(id,elementList,content);
-		
+		return "notice";
 	}
 }

@@ -14,8 +14,8 @@ import com.hack.naver.model.User;
 @Repository("NoticeDao")
 public class NoticeDao extends ConnectDB{
 
-	public List<Map<String, Object>> selectPaging(Paging paging) {
-		return (List<Map<String, Object>>)selectList("notice.selectList", paging);
+	public List<Map<String, Object>> selectPaging(Map<String, Object> map) {
+		return (List<Map<String, Object>>)selectList("notice.selectList", map);
 	}
 
 	public void insertNotice(Notice notice) {		
@@ -23,8 +23,7 @@ public class NoticeDao extends ConnectDB{
 	}
 
 	public void insertNoticeElement(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		
+		insert("notice_element.insert",map);
 	}
 
 }

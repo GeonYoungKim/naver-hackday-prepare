@@ -3,10 +3,15 @@
 
 <mapper namespace="notice">
 
-	<select id="selectList" parameterType="com.hack.naver.model.Paging" resultType="hashmap">
-		SELECT num,content
-		FROM notice
-		ORDER BY num DESC LIMIT #{no},#{unit};
+	<select id="selectList" parameterType="java.util.Map" resultType="hashmap">
+		SELECT notice.num,notice.content
+		FROM naver_hack.notice notice, naver_hack.notice_element ne
+		WHERE notice.num=ne.num and (
+		<foreach collection="userElement" item="item" separator=" or ">
+            ne.notice_element=#{item.element}
+        </foreach>
+        )
+		GROUP BY notice.num ORDER BY notice.num DESC LIMIT #{no},#{unit};
 	</select>
 	
 	<insert id="insert" parameterType="com.hack.naver.model.Notice" useGeneratedKeys="true" keyProperty="num"  keyColumn="num">
