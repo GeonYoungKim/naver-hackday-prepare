@@ -8,7 +8,6 @@
 </head>
 <body>
 	<form action="/naver/login" method="post">
-
 		ID : <input type="text" name="id" /><br/><br/>
 		 <input type="checkbox" name="A" value="A">A 
 		 <input type="checkbox" name="B" value="B">B 

@@ -32,13 +32,27 @@
   font-size: 0.75em;
 }
 </style>
-
-<body>
-
-	<div class="wrap">
-	    <textarea id="content" rows="40" cols="50" maxlength="1000" ></textarea>
-	    <span id="counter">###</span>
-	</div>
+<%
+	String userId=(String)session.getAttribute("userId");
+System.out.println(userId);
+%>
+<body>	
+	<form action="/naver/insert-notice" method="post">
+		<!--유저 아이디 전송-->
+		<input type="text" hidden name="userId" value="<%=userId%>"/>
+		
+		<div class="wrap">
+		    <textarea id="content" name="content" rows="40" cols="50" maxlength="1000" ></textarea>
+		    <span id="counter">###</span>
+		</div>
+		
+		 <input type="checkbox" name="A" value="A">A 
+		 <input type="checkbox" name="B" value="B">B 
+		 <input type="checkbox" name="C" value="C">C 
+		 <input type="submit" value="등록"/>
+	</form>
+	
+	
 	
 </body>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>

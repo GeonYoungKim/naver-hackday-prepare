@@ -10,6 +10,7 @@
 </head>
 <%
 	Map<String, Object> map = (Map) request.getAttribute("map");
+	int unit=(Integer)request.getAttribute("unit");
 %>
 <body>
 	<table BORDER="1" BORDERCOLOR="black" CELLPADDING="5" ALIGN="center">
@@ -32,11 +33,12 @@
 			<%
 				for (int i = 0; i < ((List) map.get("footerList")).size(); i++) {
 			%>
-			<td><a href="/naver/paging?no=<%=((List) map.get("footerList")).get(i)%>"><%=((List) map.get("footerList")).get(i)%></a></td>
+			<td><a href="/naver/notice?no=<%=((List) map.get("footerList")).get(i)%>&unit=<%=unit%>"><%=((List) map.get("footerList")).get(i)%></a></td>
 			<%} %>
 		</tr>
 	</table>
-	<form action="/naver/paging">
+	
+	<form>
 		<table CELLPADDING="10" ALIGN="center">
 			<tr>
 				<td>
@@ -49,14 +51,14 @@
 	            </tr>
 		</table>
 	</form>
-		<button type="submit" onclick="location.href='/naver/insert-notice'">공지사항 추가</button>
+		<button type="submit" onclick="location.href='/naver/insert-notice-form'">공지사항 추가</button>
 	</body>
 <script>
 function chageLangSelect(){
     var unitSelect = document.getElementById("unit");
     // select element에서 선택된 option의 value가 저장된다.
     var selectValue = unitSelect.options[unitSelect.selectedIndex].value;
-    location.href = "/naver/paging?no=1&unit="+selectValue;
+    location.href = "/naver/notice?no=<%=((Integer)map.get("pagingNo"))%>&unit="+selectValue;
     
  	   
 }
