@@ -35,18 +35,16 @@ public class NoticeService {
 		int footerNo = pagingNo / unit;
 		long allNo=((long)allMap.get("cnt"))/unit;
 		if (pagingNo % 10 == 0) {
-			for (int i = ((footerNo - 1) * unit) + 1; i <= ((footerNo) * unit)&&i<=allNo+(((footerNo - 1) * unit) + 1); i++) {
+			for (int i = ((footerNo - 1) * unit) + 1; i <= ((footerNo) * unit)&&i<=allNo+1; i++) {
 				footerList.add(i);
 			}
 		} else {
-			for (int i = (footerNo * unit) + 1; i <= ((footerNo+1) * unit)&&i<=allNo+((footerNo * unit) + 1); i++) {
+			for (int i = (footerNo * unit) + 1; i <= ((footerNo+1) * unit)&&i<=allNo+1; i++) {
+				System.out.println(i);
 				footerList.add(i);
 			}
 		}
-		
-		if(footerList.size()==0) {
-			footerList.add(1);
-		}
+		map.put("allNo",allNo+1);
 		map.put("pagingNo", pagingNo);
 		map.put("footerList", footerList);
 		map.put("tableList", tableList);

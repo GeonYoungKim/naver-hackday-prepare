@@ -11,8 +11,11 @@
 <%
 	String beforeNo="<<";
 	String afterNo=">>";
+	
+
 	Map<String, Object> map = (Map) request.getAttribute("map");	
-	System.out.println(map);
+	int before=(Integer)((List)map.get("footerList")).get(0);
+	int after=(Integer)((List)map.get("footerList")).get(((List)map.get("footerList")).size()-1);
 	String id=(String)session.getAttribute("userId");
 	int unit=(Integer)request.getAttribute("unit");
 %>
@@ -84,6 +87,9 @@ function noticeDelete(userId,num,noticeId){
 		%>
 	</table>
 	<table>
+		<%if(before>10){%>
+			<tr><td><a href="/naver/notice?no=<%=before-1%>&unit=<%=unit%>"><%=beforeNo %></a></td></tr>
+		<% }%>
 		<tr>
 			<%
 				for (int i = 0; i < ((List) map.get("footerList")).size(); i++) {
@@ -92,6 +98,10 @@ function noticeDelete(userId,num,noticeId){
 			
 			<%} %>
 		</tr>
+		<%if((after%10)==0&&after!=(Long)map.get("allNo")){ %>
+			<tr><td><a href="/naver/notice?no=<%=after+1%>&unit=<%=unit%>"><%=afterNo %></a></td></tr>
+		<%} %>
+		
 	</table>
 	
 	<form>
