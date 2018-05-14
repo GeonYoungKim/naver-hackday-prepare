@@ -88,5 +88,17 @@ public class NoticeService {
 		noticeDao.deleteNotice(num);
 		
 	}
+	public List<Map<String, Object>> selectNotice(int num) {
+		return noticeDao.selectNotice(num);
+		
+		
+	}
+	public void updateNotice(int num, String content) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("num", num);
+		map.put("content", content);
+		noticeDao.updateNotice(map);
+		
+	}
 
 }

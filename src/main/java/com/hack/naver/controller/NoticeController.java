@@ -67,20 +67,37 @@ public class NoticeController {
 		noticeService.insertNotice(id,elementList,content);
 		return "redirect:/notice";
 	}
-	@RequestMapping(value = "/update-notice", method = RequestMethod.POST,produces="text/plain;charset=UTF-8")
-	public String updateNotice(HttpServletRequest request) throws UnsupportedEncodingException {
-		request.setCharacterEncoding("UTF-8");
-		System.out.println("공지 수정");
-		return "update_notice_form";
-	}
+	
 	@RequestMapping(value = "/delete-notice", method = RequestMethod.POST,produces="text/plain;charset=UTF-8")
 	public void deleteNotice(HttpServletRequest request,HttpServletResponse response) throws UnsupportedEncodingException {
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
 		
 		int num=Integer.parseInt(request.getParameter("noticeNum"));
-		
 		noticeService.deleteNotice(num);
-				
+	}
+	@RequestMapping(value = "/update-notice", method = RequestMethod.POST,produces="text/plain;charset=UTF-8")
+	public String updateNotice(HttpServletRequest request,HttpServletResponse response) throws UnsupportedEncodingException {
+		request.setCharacterEncoding("UTF-8");
+		response.setCharacterEncoding("UTF-8");
+		
+		int num=Integer.parseInt(request.getParameter("num"));
+		String content=request.getParameter("content");
+		
+		noticeService.updateNotice(num,content);
+		
+		return "redirect:/notice";
+	}
+	
+	@RequestMapping(value = "/update-notice-form")
+	public String updateNoticeForm(HttpServletRequest request,HttpServletResponse response) throws UnsupportedEncodingException {
+		request.setCharacterEncoding("UTF-8");
+		response.setCharacterEncoding("UTF-8");
+		
+		int num=Integer.parseInt(request.getParameter("num"));
+		List<Map<String,Object>> notice=noticeService.selectNotice(num);
+		request.setAttribute("notice", notice);
+		return "update_notice_form";
+		
 	}
 }

@@ -33,4 +33,21 @@
 		WHERE
 			num=#{num};
 	</delete>
+	<select id="selectOne" parameterType="Integer" resultType="hashmap">
+		SELECT 
+			* 
+		FROM 
+			naver_hack.notice 
+		WHERE
+			num=#{num};
+	
+	</select>
+	<update id="update">
+		UPDATE 
+			naver_hack.notice 
+		SET 
+			content=#{content} 
+		WHERE num=#{num}
+		
+	</update>
 </mapper>

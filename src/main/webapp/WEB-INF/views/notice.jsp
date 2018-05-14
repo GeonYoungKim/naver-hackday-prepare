@@ -23,17 +23,16 @@ function chageLangSelect(){
     var selectValue = unitSelect.options[unitSelect.selectedIndex].value;
     location.href = "/naver/notice?no=<%=((Integer)map.get("pagingNo"))%>&unit="+selectValue;
 }
-function noticeUpdate(userId,map){
+function noticeUpdate(userId,num,noticeId){
 	var id=userId;
-	var afterMap=map;
+	var jsNum=num;
+	var noticeId = noticeId;
 	
-	var jsMap = new Map(JSON.parse(afterMap));
-	alert("as");
-	if(id!=map.noticeId){
+	if(id!=noticeId){
 		alert("수정 권한이 없습니다.");
 	}else{
 		if(confirm("정말 수정 하시겠습니까?")){
-			
+			location.href = "/naver/update-notice-form?num="+jsNum;
 		}else{
 			alert("수정 취소 되었습니다.");
 		}
@@ -73,7 +72,7 @@ function noticeDelete(userId,num,noticeId){
 		
 		<TR>
 			<td align="center" WIDTH="70"><%=((List<Map<String,Object>>)map.get("tableList")).get(i).get("content") %></td>
-			<td><button onclick="noticeUpdate('<%=id%>','<%=((List<Map<String,Object>>)map.get("tableList")).get(i)%>')">수정</button></td>
+			<td><button onclick="noticeUpdate('<%=id%>','<%=((List<Map<String,Object>>)map.get("tableList")).get(i).get("num")%>','<%=((List<Map<String,Object>>)map.get("tableList")).get(i).get("user_id")%>')">수정</button></td>
 			<td><button onclick="noticeDelete('<%=id%>','<%=((List<Map<String,Object>>)map.get("tableList")).get(i).get("num")%>','<%=((List<Map<String,Object>>)map.get("tableList")).get(i).get("user_id")%>')">삭제</button></td>
 		</TR>
 		<%

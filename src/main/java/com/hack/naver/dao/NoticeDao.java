@@ -35,4 +35,13 @@ public class NoticeDao extends ConnectDB{
 		delete("notice.delete",num);
 	}
 
+	public List<Map<String, Object>> selectNotice(int num) {
+		
+		return (List<Map<String, Object>>)selectList("notice.selectOne",num);
+	}
+
+	public void updateNotice(Map<String, Object> map) {
+		update("notice.update", map);		
+	}
+
 }
