@@ -3,7 +3,7 @@
 
 <mapper namespace="notice">
 
-	<select id="selectList" parameterType="java.util.Map"
+	<select id="selectTableList" parameterType="java.util.Map"
 		resultType="hashmap">
 		SELECT *
 		FROM naver_hack.notice notice, naver_hack.notice_element ne
@@ -12,8 +12,7 @@
 			close=" ) " separator=" or ">
 			ne.notice_element=#{item.element}
 		</foreach>
-
-		GROUP BY notice.num ORDER BY notice.num DESC LIMIT #{no},#{unit};
+		GROUP BY notice.num ORDER BY ne.notice_element ASC, notice.num DESC LIMIT #{no},#{unit};
 	</select>
 
 	<insert id="insert" parameterType="com.hack.naver.model.Notice"
@@ -50,4 +49,19 @@
 		WHERE num=#{num}
 		
 	</update>
+	<select id="selectAllList" parameterType="java.util.Map"
+		resultType="hashmap">
+		select count(c.num) as cnt
+		from
+		(
+			SELECT notice.num
+			FROM naver_hack.notice notice, naver_hack.notice_element ne
+			WHERE notice.num=ne.num and
+			<foreach collection="userElement" item="item" open=" ( "
+				close=" ) " separator=" or ">
+				ne.notice_element=#{item.element}
+			</foreach>
+			GROUP BY notice.num
+		) as c;
+	</select>
 </mapper>

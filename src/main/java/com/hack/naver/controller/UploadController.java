@@ -54,7 +54,6 @@ public class UploadController {
 	public String uploadFile(MultipartHttpServletRequest mHttpServletRequest) throws UnsupportedEncodingException {
 		System.out.println("uploaa");
 		List<MultipartFile> fileList = mHttpServletRequest.getFiles("file");
-
 		for (MultipartFile multipartFile : fileList) {
 			if (!multipartFile.isEmpty()) {
 				String orginFileName = new String(multipartFile.getOriginalFilename().getBytes("8859_1"), "UTF-8");

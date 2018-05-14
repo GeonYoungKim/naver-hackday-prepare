@@ -9,6 +9,8 @@
 <title>Insert title here</title>
 </head>
 <%
+	String beforeNo="<<";
+	String afterNo=">>";
 	Map<String, Object> map = (Map) request.getAttribute("map");	
 	System.out.println(map);
 	String id=(String)session.getAttribute("userId");
@@ -65,6 +67,7 @@ function noticeDelete(userId,num,noticeId){
 	<table BORDER="1" BORDERCOLOR="black" CELLPADDING="5" ALIGN="center">
 		<TR>
 			<TH align="center" WIDTH="70">컨텐츠</TH>
+			<TH align="center" WIDTH="70">그룹</TH>
 		<TR>
 		<%
 			for (int i = 0; i < ((List) map.get("tableList")).size(); i++) {
@@ -72,6 +75,7 @@ function noticeDelete(userId,num,noticeId){
 		
 		<TR>
 			<td align="center" WIDTH="70"><%=((List<Map<String,Object>>)map.get("tableList")).get(i).get("content") %></td>
+			<td align="center" WIDTH="70"><%=((List<Map<String,Object>>)map.get("tableList")).get(i).get("notice_element") %></td>
 			<td><button onclick="noticeUpdate('<%=id%>','<%=((List<Map<String,Object>>)map.get("tableList")).get(i).get("num")%>','<%=((List<Map<String,Object>>)map.get("tableList")).get(i).get("user_id")%>')">수정</button></td>
 			<td><button onclick="noticeDelete('<%=id%>','<%=((List<Map<String,Object>>)map.get("tableList")).get(i).get("num")%>','<%=((List<Map<String,Object>>)map.get("tableList")).get(i).get("user_id")%>')">삭제</button></td>
 		</TR>

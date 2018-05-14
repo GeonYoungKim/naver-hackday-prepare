@@ -27,11 +27,13 @@ public class LoginController{
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String main(HttpServletRequest request) {
+		System.out.println("login - GET");
 		return "login";
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST,produces="text/plain;charset=UTF-8")
 	public String login(HttpServletRequest request,HttpSession session) throws UnsupportedEncodingException {
+		System.out.println("login - POST");
 		request.setCharacterEncoding("UTF-8");
 		List<String> elementList=new ArrayList<String>();
 		

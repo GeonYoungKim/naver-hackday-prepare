@@ -27,6 +27,7 @@ public class NoticeController {
 	
 	@RequestMapping(value = "/notice", method = RequestMethod.GET)
 	public String paging(HttpServletRequest request,HttpSession sesstion) {
+		System.out.println("notice - GET");
 		int unit=10;
 		
 		int pagingNo=1;
@@ -47,10 +48,12 @@ public class NoticeController {
 	
 	@RequestMapping(value = "/insert-notice-form")
 	public String insertNoticeForm(HttpServletRequest request) {
+		System.out.println("noticeInsertForm - GET");
 		return "insert_notice_form";
 	}
 	@RequestMapping(value = "/insert-notice", method = RequestMethod.POST,produces="text/plain;charset=UTF-8")
 	public String insertNotice(HttpServletRequest request) throws UnsupportedEncodingException {
+		System.out.println("noticeInsert - POST");
 		request.setCharacterEncoding("UTF-8");
 		List<String> elementList=new ArrayList<String>();
 		String id=request.getParameter("userId");
@@ -68,6 +71,7 @@ public class NoticeController {
 	
 	@RequestMapping(value = "/delete-notice", method = RequestMethod.POST,produces="text/plain;charset=UTF-8")
 	public void deleteNotice(HttpServletRequest request,HttpServletResponse response) throws UnsupportedEncodingException {
+		System.out.println("noticeDelete - POST");
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
 		
@@ -76,6 +80,7 @@ public class NoticeController {
 	}
 	@RequestMapping(value = "/update-notice", method = RequestMethod.POST,produces="text/plain;charset=UTF-8")
 	public String updateNotice(HttpServletRequest request,HttpServletResponse response) throws UnsupportedEncodingException {
+		System.out.println("noticeUpdate - POST");
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
 		
@@ -89,6 +94,7 @@ public class NoticeController {
 	
 	@RequestMapping(value = "/update-notice-form")
 	public String updateNoticeForm(HttpServletRequest request,HttpServletResponse response) throws UnsupportedEncodingException {
+		System.out.println("noticeUpdateForm - GET");
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
 		

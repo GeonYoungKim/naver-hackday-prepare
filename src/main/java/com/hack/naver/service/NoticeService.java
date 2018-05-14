@@ -19,13 +19,7 @@ public class NoticeService {
 	@Resource(name = "NoticeDao")
 	private NoticeDao noticeDao;
 
-
 	
-	private void footerCompareAdd(int a, int b,List<Integer> footerList) {
-		if(a<b) {
-			footerList.add(a);
-		}
-	}
 	public Map<String, Object> select(int pagingNo, int unit, List<Map<String, Object>> userElement) {
 		
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -36,18 +30,21 @@ public class NoticeService {
 		map.put("userElement", userElement);
 		
 		List<Map<String, Object>> tableList = (userElement.size()==0)?new ArrayList<Map<String,Object>>():noticeDao.selectPaging(map);
-
+		Map<String, Object> allMap = (userElement.size()==0)?new HashMap<String,Object>():noticeDao.selectAllPaging(map);
+		
 		int footerNo = pagingNo / unit;
+		long allNo=((long)allMap.get("cnt"))/unit;
 		if (pagingNo % 10 == 0) {
-			for (int i = ((footerNo - 1) * unit) + 1; i <= (footerNo) * unit; i++) {
-				footerCompareAdd(i,tableList.size(),footerList);
+			for (int i = ((footerNo - 1) * unit) + 1; i <= ((footerNo) * unit)&&i<=allNo+(((footerNo - 1) * unit) + 1); i++) {
+				footerList.add(i);
 			}
 		} else {
-			for (int i = (footerNo * unit) + 1; i <= (footerNo + 1) * unit; i++) {
-				footerCompareAdd(i,tableList.size(),footerList);
+			for (int i = (footerNo * unit) + 1; i <= ((footerNo+1) * unit)&&i<=allNo+((footerNo * unit) + 1); i++) {
+				footerList.add(i);
 			}
 		}
-		if(tableList.size()==1) {
+		
+		if(footerList.size()==0) {
 			footerList.add(1);
 		}
 		map.put("pagingNo", pagingNo);

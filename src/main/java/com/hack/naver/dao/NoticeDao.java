@@ -1,5 +1,6 @@
 package com.hack.naver.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -15,7 +16,7 @@ import com.hack.naver.model.User;
 public class NoticeDao extends ConnectDB{
 
 	public List<Map<String, Object>> selectPaging(Map<String, Object> map) {
-		return (List<Map<String, Object>>)selectList("notice.selectList", map);
+		return (List<Map<String, Object>>)selectList("notice.selectTableList", map);
 	}
 
 	public void insertNotice(Notice notice) {		
@@ -42,6 +43,10 @@ public class NoticeDao extends ConnectDB{
 
 	public void updateNotice(Map<String, Object> map) {
 		update("notice.update", map);		
+	}
+
+	public Map<String, Object> selectAllPaging(Map<String, Object> map) {
+		return (Map<String, Object>)selectOne("notice.selectAllList", map);
 	}
 
 }
