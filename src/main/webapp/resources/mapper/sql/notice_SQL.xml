@@ -6,11 +6,11 @@
 	<select id="selectList" parameterType="java.util.Map" resultType="hashmap">
 		SELECT notice.num,notice.content
 		FROM naver_hack.notice notice, naver_hack.notice_element ne
-		WHERE notice.num=ne.num and (
-		<foreach collection="userElement" item="item" separator=" or ">
+		WHERE notice.num=ne.num and 
+		<foreach collection="userElement" item="item"  open=" ( " close=" ) " separator=" or ">
             ne.notice_element=#{item.element}
         </foreach>
-        )
+        
 		GROUP BY notice.num ORDER BY notice.num DESC LIMIT #{no},#{unit};
 	</select>
 	

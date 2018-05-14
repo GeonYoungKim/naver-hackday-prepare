@@ -10,6 +10,7 @@
 </head>
 <%
 	Map<String, Object> map = (Map) request.getAttribute("map");
+	System.out.println(map);
 	int unit=(Integer)request.getAttribute("unit");
 %>
 <body>

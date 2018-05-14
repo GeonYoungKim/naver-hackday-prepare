@@ -34,7 +34,8 @@ public class NoticeService {
 		map.put("no", (pagingNo - 1) * unit);
 		map.put("unit", unit);
 		map.put("userElement", userElement);
-		List<Map<String, Object>> tableList = noticeDao.selectPaging(map);
+		
+		List<Map<String, Object>> tableList = (userElement.size()==0)?new ArrayList<Map<String,Object>>():noticeDao.selectPaging(map);
 
 		int footerNo = pagingNo / unit;
 		if (pagingNo % 10 == 0) {
