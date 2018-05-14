@@ -7,11 +7,14 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.JsonObject;
 import com.hack.naver.service.LoginService;
@@ -62,6 +65,22 @@ public class NoticeController {
 		elementList.add(B);
 		elementList.add(C);
 		noticeService.insertNotice(id,elementList,content);
-		return "notice";
+		return "redirect:/notice";
+	}
+	@RequestMapping(value = "/update-notice", method = RequestMethod.POST,produces="text/plain;charset=UTF-8")
+	public String updateNotice(HttpServletRequest request) throws UnsupportedEncodingException {
+		request.setCharacterEncoding("UTF-8");
+		System.out.println("공지 수정");
+		return "update_notice_form";
+	}
+	@RequestMapping(value = "/delete-notice", method = RequestMethod.POST,produces="text/plain;charset=UTF-8")
+	public void deleteNotice(HttpServletRequest request,HttpServletResponse response) throws UnsupportedEncodingException {
+		request.setCharacterEncoding("UTF-8");
+		response.setCharacterEncoding("UTF-8");
+		
+		int num=Integer.parseInt(request.getParameter("noticeNum"));
+		
+		noticeService.deleteNotice(num);
+				
 	}
 }

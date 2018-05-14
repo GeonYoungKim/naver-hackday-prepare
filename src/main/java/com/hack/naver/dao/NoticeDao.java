@@ -26,4 +26,13 @@ public class NoticeDao extends ConnectDB{
 		insert("notice_element.insert",map);
 	}
 
+	public void deleteNoticeElement(int num) {
+		delete("notice_element.delete", num);
+		
+	}
+
+	public void deleteNotice(int num) {
+		delete("notice.delete",num);
+	}
+
 }

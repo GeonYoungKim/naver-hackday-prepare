@@ -47,7 +47,9 @@ public class NoticeService {
 				footerCompareAdd(i,tableList.size(),footerList);
 			}
 		}
-
+		if(tableList.size()==1) {
+			footerList.add(1);
+		}
 		map.put("pagingNo", pagingNo);
 		map.put("footerList", footerList);
 		map.put("tableList", tableList);
@@ -80,6 +82,11 @@ public class NoticeService {
 		map.put("list", list);
 		noticeDao.insertNoticeElement(map);
 
+	}
+	public void deleteNotice(int num) {
+		noticeDao.deleteNoticeElement(num);
+		noticeDao.deleteNotice(num);
+		
 	}
 
 }

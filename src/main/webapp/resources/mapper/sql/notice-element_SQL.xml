@@ -10,4 +10,11 @@
             (#{item.num}, #{item.element})
         </foreach>
 	</insert>
+	
+	<delete id="delete" parameterType="Integer">
+		DELETE FROM 
+			naver_hack.notice_element 
+		WHERE 
+			num=#{num};
+	</delete>
 </mapper>

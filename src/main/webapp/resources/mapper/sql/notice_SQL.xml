@@ -3,25 +3,34 @@
 
 <mapper namespace="notice">
 
-	<select id="selectList" parameterType="java.util.Map" resultType="hashmap">
-		SELECT notice.num,notice.content
+	<select id="selectList" parameterType="java.util.Map"
+		resultType="hashmap">
+		SELECT *
 		FROM naver_hack.notice notice, naver_hack.notice_element ne
-		WHERE notice.num=ne.num and 
-		<foreach collection="userElement" item="item"  open=" ( " close=" ) " separator=" or ">
-            ne.notice_element=#{item.element}
-        </foreach>
-        
+		WHERE notice.num=ne.num and
+		<foreach collection="userElement" item="item" open=" ( "
+			close=" ) " separator=" or ">
+			ne.notice_element=#{item.element}
+		</foreach>
+
 		GROUP BY notice.num ORDER BY notice.num DESC LIMIT #{no},#{unit};
 	</select>
-	
-	<insert id="insert" parameterType="com.hack.naver.model.Notice" useGeneratedKeys="true" keyProperty="num"  keyColumn="num">
-		INSERT INTO 
-			naver_hack.notice (content, user_id) 
+
+	<insert id="insert" parameterType="com.hack.naver.model.Notice"
+		useGeneratedKeys="true" keyProperty="num" keyColumn="num">
+		INSERT INTO
+		naver_hack.notice (content, user_id)
 		VALUES
-			(#{content},#{id});
+		(#{content},#{id});
 		<selectKey keyProperty="num" resultType="Integer" order="AFTER">
-	        SELECT LAST_INSERT_ID()
-	    </selectKey>
-		
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+
 	</insert>
+	<delete id="delete" parameterType="Integer">
+		DELETE FROM
+			naver_hack.notice
+		WHERE
+			num=#{num};
+	</delete>
 </mapper>
