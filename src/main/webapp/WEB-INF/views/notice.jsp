@@ -20,6 +20,8 @@
 %>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 <script src="http://ajax.cdnjs.com/ajax/libs/json2/20110223/json2.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.0.3/sockjs.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js"></script>
 <script>
 function chageLangSelect(){
     var unitSelect = document.getElementById("unit");
@@ -64,8 +66,36 @@ function noticeDelete(userId,num,noticeId){
 		}
 	}
 }
+var stompClient=null;
+function connect(){
+	var socket = new SockJS('/naver/hello');
+	stompClient=Stomp.over(socket);
+	stompClient.connect({}, function(frame) {
+    	
+        console.log('Connected: ' + frame);
+        stompClient.subscribe('/topic/greetings', function(calResult){
+        	showResult(JSON.parse(calResult.body).content);
+        });
+    });
+}
+
+function disconnect() {
+	if(stompClient != null){
+		 stompClient.disconnect();
+	}
+    console.log("Disconnected");
+}
+
+function sendName() {
+    var name = document.getElementById('name').value;
+    stompClient.send("/app/hello",{},JSON.stringify({'name':name}));
+}
+
+function showResult(message) {
+    alert("새로운 공지가 등록되었습니다.");
+}
 </script>
-<body>
+<body onload="connect()">
 	<table BORDER="1" BORDERCOLOR="black" CELLPADDING="5" ALIGN="center">
 		<TR>
 			<TH align="center" WIDTH="70">컨텐츠</TH>

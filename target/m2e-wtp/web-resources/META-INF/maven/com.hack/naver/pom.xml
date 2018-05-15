@@ -39,6 +39,19 @@
 		    <version>1.9.5</version>
 		    <scope>test</scope>
 		</dependency>
+		
+		<!-- WebSocket -->
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-websocket</artifactId>
+		    <version>4.3.6.RELEASE</version>
+		</dependency>	
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-messaging</artifactId>
+		    <version>4.3.6.RELEASE</version>
+		</dependency>	
+		
 
 		<!-- GSON -->
 		<dependency>

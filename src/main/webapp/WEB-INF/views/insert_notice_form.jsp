@@ -1,10 +1,23 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.0.3/sockjs.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js"></script>
+<script type="text/javascript">
+    	var stompClient=null;
+    	var socket = new SockJS('/naver/hello');
+		stompClient=Stomp.over(socket);
+    	
+        function send() {
+            var name = "ê³µì§€";
+            stompClient.send("/app/hello",{},JSON.stringify({'name':name}));
+        }
+
+    </script>
 </head>
 <style>
 .wrap {
@@ -33,12 +46,12 @@
 }
 </style>
 <%
-	String userId=(String)session.getAttribute("userId");
+String userId=(String)session.getAttribute("userId");
 System.out.println(userId);
 %>
 <body>	
-	<form action="/naver/insert-notice" method="post">
-		<!--À¯Àú ¾ÆÀÌµð Àü¼Û-->
+	<form action="/naver/insert-notice" method="post" onsubmit="send()">
+		<!--ìœ ì € ì•„ì´ë”” ì „ì†¡-->
 		<input type="text" hidden name="userId" value="<%=userId%>"/>
 		
 		<div class="wrap">
@@ -49,7 +62,7 @@ System.out.println(userId);
 		 <input type="checkbox" name="A" value="A">A 
 		 <input type="checkbox" name="B" value="B">B 
 		 <input type="checkbox" name="C" value="C">C 
-		 <input type="submit" value="µî·Ï"/>
+		 <input type="submit" value="ë“±ë¡"/>
 	</form>
 	
 	
