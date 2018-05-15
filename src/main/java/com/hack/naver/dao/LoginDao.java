@@ -34,4 +34,9 @@ public class LoginDao extends ConnectDB{
 	public List<Map<String, Object>> getUserElement(String userId) {
 		return (List<Map<String, Object>>)selectList("user_element.select", userId);
 	}
+
+	public List<Map<String,Object>> selectOneUserGroup(Map<String, Object> map) {
+		return (List<Map<String,Object>>)selectList("user_element.selectOneUserGroup",map);
+		
+	}
 }

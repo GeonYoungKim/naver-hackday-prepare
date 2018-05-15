@@ -7,7 +7,6 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
-import org.omg.CORBA.PRIVATE_MEMBER;
 import org.springframework.stereotype.Service;
 
 import com.hack.naver.dao.LoginDao;
@@ -57,5 +56,26 @@ public class LoginService {
 	public List<Map<String, Object>> getUserElement(String userId) {
 		
 		return loginDao.getUserElement(userId);
+	}
+
+	public String selectOneUserGroup(String myId,String noticeId, Map<String, Object> params) {
+		Map<String, Object> map = new HashMap<String,Object>();
+		List<String> list=new ArrayList<String>();
+		
+		if(!(myId.equals(noticeId))) {
+			for(Object object:params.values()) {
+				list.add(object.toString());
+			}
+			map.put("list", list);
+			map.put("id", myId);
+			List<Map<String,Object>> result=loginDao.selectOneUserGroup(map);
+			if(result.size()==0) {
+				return "false";
+			}else {
+				return "true";
+			}
+		}else {
+			return "false";
+		}
 	}
 }

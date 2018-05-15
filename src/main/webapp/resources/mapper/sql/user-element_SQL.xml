@@ -27,4 +27,16 @@
 		WHERE
 			id=#{id};
 	</select>
+	<select id="selectOneUserGroup" parameterType="java.util.Map" resultType="hashmap">
+	SELECT 
+		* 
+	FROM 
+		naver_hack.user_element 
+	WHERE 
+		id=#{id} and 
+		<foreach collection="list" item="item" open=" ( "
+			close=" ) " separator=" or ">
+			element=#{item}
+		</foreach>
+	</select>
 </mapper>

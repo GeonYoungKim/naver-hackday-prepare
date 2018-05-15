@@ -86,13 +86,17 @@ function disconnect() {
     console.log("Disconnected");
 }
 
-function sendName() {
-    var name = document.getElementById('name').value;
-    stompClient.send("/app/hello",{},JSON.stringify({'name':name}));
-}
 
 function showResult(message) {
-    alert("새로운 공지가 등록되었습니다.");
+	$.post("http://localhost:8080/naver/alarm-judge", //Required URL of the page on server
+				{ // Data Sending With Request To Server
+				data:message
+				},
+				function(response,status){ // Required Callback Function
+					if(response=="true"){
+						alert("새로운 공지가 등록되었습니다.");
+					}
+				});
 }
 </script>
 <body onload="connect()">

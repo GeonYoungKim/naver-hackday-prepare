@@ -16,40 +16,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 @Controller
 public class UploadController {
-
-	// @RequestMapping(value = "/upload-file", method =
-	// RequestMethod.POST,produces="text/plain;charset=UTF-8")
-	// public void uploadFileHandler(@RequestParam("file") MultipartFile file)
-	// throws UnsupportedEncodingException {
-	//
-	// if (!file.isEmpty()) {
-	// String rootPath = "C:\\Users\\c2619\\Desktop\\gunyoungkim";
-	// File dir = new File(rootPath + File.separator + "tmpFiles");
-	// if (!dir.exists())
-	// dir.mkdirs();
-	//
-	// // Create the file on server
-	// String orginFileName = new
-	// String(file.getOriginalFilename().getBytes("8859_1"),"UTF-8");
-	// File serverFile = new File(dir.getAbsolutePath() + File.separator +
-	// orginFileName);
-	//
-	// try {
-	// try (InputStream is = file.getInputStream();
-	// BufferedOutputStream stream = new BufferedOutputStream(new
-	// FileOutputStream(serverFile))) {
-	// int i;
-	// while ((i = is.read()) != -1) {
-	// stream.write(i);
-	// }
-	// stream.flush();
-	// }
-	// } catch (IOException e) {
-	// System.out.println("error : " + e.getMessage());
-	// }
-	// }
-	//
-	// }
+	
 	@RequestMapping(value = "/upload-file", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
 	public String uploadFile(MultipartHttpServletRequest mHttpServletRequest) throws UnsupportedEncodingException {
 		System.out.println("uploaa");

@@ -39,8 +39,7 @@ public class NoticeService {
 				footerList.add(i);
 			}
 		} else {
-			for (int i = (footerNo * unit) + 1; i <= ((footerNo+1) * unit)&&i<=allNo+1; i++) {
-				System.out.println(i);
+			for (int i = (footerNo * unit) + 1; i <= ((footerNo+1) * unit)&&i<=allNo+1; i++) {				
 				footerList.add(i);
 			}
 		}

@@ -2,9 +2,6 @@ package com.hack.naver.model;
 
 public class Response {
 	private String content;
-	
-	
-	
 
 	public Response(String content) {
 		super();

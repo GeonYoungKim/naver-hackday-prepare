@@ -13,8 +13,11 @@
 		stompClient=Stomp.over(socket);
     	
         function send() {
-            var name = "공지";
-            stompClient.send("/app/hello",{},JSON.stringify({'name':name}));
+        	var A = (document.getElementById('A').checked)?'A':'NO';
+        	var B = (document.getElementById('B').checked)?'B':'NO';
+        	var C = (document.getElementById('C').checked)?'C':'NO';
+			var id= document.getElementById('userId').value;
+            stompClient.send("/app/hello",{},JSON.stringify({'id':id,'A':A,'B':B,'C':C}));
         }
 
     </script>
@@ -52,16 +55,16 @@ System.out.println(userId);
 <body>	
 	<form action="/naver/insert-notice" method="post" onsubmit="send()">
 		<!--유저 아이디 전송-->
-		<input type="text" hidden name="userId" value="<%=userId%>"/>
+		<input type="text" hidden name="userId" id="userId" value="<%=userId%>"/>
 		
 		<div class="wrap">
 		    <textarea id="content" name="content" rows="40" cols="50" maxlength="1000" ></textarea>
 		    <span id="counter">###</span>
 		</div>
 		
-		 <input type="checkbox" name="A" value="A">A 
-		 <input type="checkbox" name="B" value="B">B 
-		 <input type="checkbox" name="C" value="C">C 
+		 <input type="checkbox" id="A" name="A" value="A">A 
+		 <input type="checkbox" id="B" name="B" value="B">B 
+		 <input type="checkbox" id="C" name="C" value="C">C 
 		 <input type="submit" value="등록"/>
 	</form>
 	
