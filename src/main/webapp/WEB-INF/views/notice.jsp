@@ -11,9 +11,8 @@
 <%
 	String beforeNo="<<";
 	String afterNo=">>";
-	
-
 	Map<String, Object> map = (Map) request.getAttribute("map");	
+	System.out.println(map);
 	int before=(Integer)((List)map.get("footerList")).get(0);
 	int after=(Integer)((List)map.get("footerList")).get(((List)map.get("footerList")).size()-1);
 	String id=(String)session.getAttribute("userId");
@@ -93,10 +92,15 @@ function noticeDelete(userId,num,noticeId){
 		<tr>
 			<%
 				for (int i = 0; i < ((List) map.get("footerList")).size(); i++) {
+					if(((List) map.get("footerList")).get(i)==map.get("pagingNo")){
 			%>
-			<td><a href="/naver/notice?no=<%=((List) map.get("footerList")).get(i)%>&unit=<%=unit%>"><%=((List) map.get("footerList")).get(i)%></a></td>
+				<td><a href="/naver/notice?no=<%=((List) map.get("footerList")).get(i)%>&unit=<%=unit%>"><b><%=((List) map.get("footerList")).get(i)%></b></a></td>
 			
-			<%} %>
+					<%}else{ %>
+					<td><a href="/naver/notice?no=<%=((List) map.get("footerList")).get(i)%>&unit=<%=unit%>"><%=((List) map.get("footerList")).get(i)%></a></td>
+			
+					<%}
+				} %>
 		</tr>
 		<%if((after%10)==0&&after!=(Long)map.get("allNo")){ %>
 			<tr><td><a href="/naver/notice?no=<%=after+1%>&unit=<%=unit%>"><%=afterNo %></a></td></tr>
