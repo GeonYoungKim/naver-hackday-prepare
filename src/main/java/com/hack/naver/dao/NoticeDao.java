@@ -56,6 +56,10 @@ public class NoticeDao extends ConnectDB{
 
 	public void updateUserCount(String id) {
 		update("user.updateCount", id);
+	}
+
+	public void updateCount(Map<String, Object> map) {
+		update("user.updateLogoutCount", map);
 		
 	}
 

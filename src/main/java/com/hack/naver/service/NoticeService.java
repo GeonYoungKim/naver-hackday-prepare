@@ -38,10 +38,11 @@ public class NoticeService {
 		int footerNo = pagingNo / unit;
 		
 		if((long) allMap.get("cnt")>(Integer)allMap.get("count")) {
-			System.out.println("YES");
+			map.put("count", (long) allMap.get("cnt"));
+			noticeDao.updateCount(map);
 			map.put("alarm", "YES");
 		}else {
-			System.out.println("NO");
+			
 			map.put("alarm", "NO");
 		}
 		

@@ -32,4 +32,12 @@
 		WHERE 
 			id=#{id}; 
 	</update>
+	<update id="updateLogoutCount" parameterType="java.util.Map">
+		UPDATE 
+			naver_hack.user 
+		SET 
+			count=#{count}
+		WHERE 
+			id=#{id}; 
+	</update>
 </mapper>

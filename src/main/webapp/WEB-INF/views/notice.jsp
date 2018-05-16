@@ -30,7 +30,7 @@ function chageLangSelect(){
     var unitSelect = document.getElementById("unit");
     // select element에서 선택된 option의 value가 저장된다.
     var selectValue = unitSelect.options[unitSelect.selectedIndex].value;
-    location.href = "/naver/notice?no=<%=((Integer)map.get("pagingNo"))%>&unit="+selectValue;
+    location.href = "/naver/notice?no=1&unit="+selectValue;
 }
 function noticeUpdate(userId,num,noticeId){
 	var id=userId;
