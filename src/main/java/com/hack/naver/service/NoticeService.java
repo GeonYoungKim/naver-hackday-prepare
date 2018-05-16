@@ -30,10 +30,8 @@ public class NoticeService {
 		map.put("unit", unit);
 		map.put("userElement", userElement);
 		map.put("id",id);
-		List<Map<String, Object>> tableList = (userElement.size() == 0) ? new ArrayList<Map<String, Object>>()
-				: noticeDao.selectPaging(map);
-		Map<String, Object> allMap = (userElement.size() == 0) ? new HashMap<String, Object>()
-				: noticeDao.selectAllPaging(map);
+		List<Map<String, Object>> tableList = (userElement.size() == 0) ? new ArrayList<Map<String, Object>>() : noticeDao.selectPaging(map);
+		Map<String, Object> allMap = (userElement.size() == 0) ? new HashMap<String, Object>() : noticeDao.selectAllPaging(map);
 
 		int footerNo = pagingNo / unit;
 		
@@ -42,7 +40,6 @@ public class NoticeService {
 			noticeDao.updateCount(map);
 			map.put("alarm", "YES");
 		}else {
-			
 			map.put("alarm", "NO");
 		}
 		
@@ -75,7 +72,7 @@ public class NoticeService {
 		NoticeElement noticeElement;
 	
 		for (int i = 0; i < elementList.size(); i++) {
-			if (elementList.get(i) != "NO") {
+			if (!(elementList.get(i).equals("NO"))) {
 	
 				noticeElement = new NoticeElement();
 				noticeElement.setNum(notice.getNum());
@@ -97,12 +94,10 @@ public class NoticeService {
 	public void deleteNotice(int num) {
 		noticeDao.deleteNoticeElement(num);
 		noticeDao.deleteNotice(num);
-
 	}
 
 	public List<Map<String, Object>> selectNotice(int num) {
 		return noticeDao.selectNotice(num);
-
 	}
 
 	public void updateNotice(int num, String content) {
@@ -110,7 +105,5 @@ public class NoticeService {
 		map.put("num", num);
 		map.put("content", content);
 		noticeDao.updateNotice(map);
-
 	}
-
 }

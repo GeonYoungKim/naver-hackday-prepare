@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="EUC-KR"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -12,7 +12,7 @@
 		 <input type="checkbox" name="A" value="A">A 
 		 <input type="checkbox" name="B" value="B">B 
 		 <input type="checkbox" name="C" value="C">C 
-		 <input type="submit" value="°¡ÀÔ"/>
+		 <input type="submit" value="ê°€ìž…"/>
 	</form>
 </body>
 </html>

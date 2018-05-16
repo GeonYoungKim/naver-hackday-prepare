@@ -1,7 +1,7 @@
 <%@page import="java.util.List"%>
 <%@page import="java.util.Map"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="EUC-KR"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTH HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dTH">
 <html>
 <head>
@@ -24,111 +24,23 @@
 <script src="http://ajax.cdnjs.com/ajax/libs/json2/20110223/json2.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.0.3/sockjs.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js"></script>
-<script>
+<script  type="text/javascript" src="resources/js/geonyoung.js"></script>
 
-function chageLangSelect(){
-    var unitSelect = document.getElementById("unit");
-    // select element¿¡¼­ ¼±ÅÃµÈ optionÀÇ value°¡ ÀúÀåµÈ´Ù.
-    var selectValue = unitSelect.options[unitSelect.selectedIndex].value;
-    location.href = "/naver/notice?no=1&unit="+selectValue;
-}
-function noticeUpdate(userId,num,noticeId){
-	var id=userId;
-	var jsNum=num;
-	var noticeId = noticeId;
-	
-	if(id!=noticeId){
-		alert("¼öÁ¤ ±ÇÇÑÀÌ ¾ø½À´Ï´Ù.");
-	}else{
-		if(confirm("Á¤¸» ¼öÁ¤ ÇÏ½Ã°Ú½À´Ï±î?")){
-			location.href = "/naver/update-notice-form?num="+jsNum;
-		}else{
-			alert("¼öÁ¤ Ãë¼Ò µÇ¾ú½À´Ï´Ù.");
-		}
-	}
-}
-function noticeDelete(userId,num,noticeId){
-	var id=userId;
-	var jsNum=num;
-	var noticeId = noticeId;
-	
-	if(id!=noticeId){
-		alert("»èÁ¦ ±ÇÇÑÀÌ ¾ø½À´Ï´Ù.");
-	}else{
-		if(confirm("Á¤¸» »èÁ¦ ÇÏ½Ã°Ú½À´Ï±î?")){
-   			$.post("http://localhost:8080/naver/delete-notice", //Required URL of the page on server
-   					{ // Data Sending With Request To Server
-   					noticeNum:jsNum
-   					},
-   					function(response,status){ // Required Callback Function
-   						location.href = "/naver/notice?no="+<%=((Integer)map.get("pagingNo"))%>+"&unit="+<%=unit%>;
-   					});
-			
-		}else{
-			alert("»èÁ¦ Ãë¼Ò µÇ¾ú½À´Ï´Ù.");
-		}
-	}
-}
-var stompClient=null;
-function connect(){
-	console.log("load");
-	var alarmFlag="<%=alarm%>";
-	if(alarmFlag=="YES"){
-		alert("»õ·Î¿î °øÁö°¡ ÀÖ½À´Ï´Ù.");
-	}
-	var socket = new SockJS('/naver/hello');
-	stompClient=Stomp.over(socket);
-	stompClient.connect({}, function(frame) {
-    	
-        console.log('Connected: ' + frame);
-        stompClient.subscribe('/topic/greetings', function(calResult){
-        	showResult(JSON.parse(calResult.body).content);
-        });
-    });
-}
-
-function disconnect() {
-	if(stompClient != null){
-		 stompClient.disconnect();
-	}
-    console.log("Disconnected");
-}
-
-
-function showResult(message) {
-	$.post("http://localhost:8080/naver/alarm-judge", //Required URL of the page on server
-				{ // Data Sending With Request To Server
-				data:message
-				},
-				function(response,status){ // Required Callback Function
-					if(response=="true"){
-						alert("»õ·Î¿î °øÁö°¡ µî·ÏµÇ¾ú½À´Ï´Ù.");
-					}
-				});
-}
-
-function logout() {
-	disconnect();
-	location.href="/naver/logout";
-}
-</script>
-<body onload="connect()">
-
-<div><button onclick="logout()">·Î±×¾Æ¿ô</button></div>
+<body onload="connect('<%=alarm%>')">
+<div><button onclick="logout()">ë¡œê·¸ì•„ì›ƒ</button></div>
 	<table BORDER="1" BORDERCOLOR="black" CELLPADDING="5" ALIGN="center">
 		<TR>
-			<TH align="center" WIDTH="70">ÄÁÅÙÃ÷</TH>
-			<TH align="center" WIDTH="70">±×·ì</TH>
+			<TH align="center" WIDTH="70">ì»¨í…ì¸ </TH>
+			<TH align="center" WIDTH="70">ê·¸ë£¹</TH>
 		<TR>
 		<%
 			for (int i = 0; i < ((List) map.get("tableList")).size(); i++) {
 		%>
-		
 		<TR>
 			<td align="center" WIDTH="70"><%=((List<Map<String,Object>>)map.get("tableList")).get(i).get("content") %></td>
 			<td align="center" WIDTH="70"><%=((List<Map<String,Object>>)map.get("tableList")).get(i).get("notice_element") %></td>
-			<td><button onclick="noticeUpdate('<%=id%>','<%=((List<Map<String,Object>>)map.get("tableList")).get(i).get("num")%>','<%=((List<Map<String,Object>>)map.get("tableList")).get(i).get("user_id")%>')">¼öÁ¤</button></td>
-			<td><button onclick="noticeDelete('<%=id%>','<%=((List<Map<String,Object>>)map.get("tableList")).get(i).get("num")%>','<%=((List<Map<String,Object>>)map.get("tableList")).get(i).get("user_id")%>')">»èÁ¦</button></td>
+			<td><button onclick="noticeUpdate('<%=id%>','<%=((List<Map<String,Object>>)map.get("tableList")).get(i).get("num")%>','<%=((List<Map<String,Object>>)map.get("tableList")).get(i).get("user_id")%>')">ìˆ˜ì •</button></td>
+			<td><button onclick="noticeDelete('<%=id%>','<%=((List<Map<String,Object>>)map.get("tableList")).get(i).get("num")%>','<%=((List<Map<String,Object>>)map.get("tableList")).get(i).get("user_id")%>','<%=((Integer)map.get("pagingNo"))%>','<%=unit%>')">ì‚­ì œ</button></td>
 		</TR>
 		<%
 			}
@@ -162,7 +74,7 @@ function logout() {
 			<tr>
 				<td>
 					<select id="unit"" name="unit" onchange="chageLangSelect()">
-						<option disabled selected>´ÜÀ§¸¦ ÁöÁ¤ÇØ ÁÖ¼¼¿ä</option>
+						<option disabled selected>ë‹¨ìœ„ë¥¼ ì§€ì •í•´ ì£¼ì„¸ìš”</option>
 						<option value="10">10</option>
 						<option value="15">15</option>
 						<option value="20">20</option>
@@ -170,7 +82,6 @@ function logout() {
 	            </tr>
 		</table>
 	</form>
-		<button type="submit" onclick="location.href='/naver/insert-notice-form'">°øÁö»çÇ× Ãß°¡</button>
+		<button type="submit" onclick="location.href='/naver/insert-notice-form'">ê³µì§€ì‚¬í•­ ì¶”ê°€</button>
 	</body>
-
 </html>

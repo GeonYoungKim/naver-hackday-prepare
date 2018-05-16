@@ -9,9 +9,7 @@
 <body>
 	<form name="fileForm" action="/naver/upload-file" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
         <input type="file" name="file" multiple/>
-        
         <input type="submit" value="전송" />
     </form>
-
 </body>
 </html>

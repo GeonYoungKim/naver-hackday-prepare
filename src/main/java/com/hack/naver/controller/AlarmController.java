@@ -27,6 +27,7 @@ import com.hack.naver.service.NoticeService;
 @Controller
 public class AlarmController {
 	private Gson gson=new Gson();
+	
 	@Resource(name = "LoginService")
 	private LoginService loginService ;
 	

@@ -13,12 +13,10 @@
 	int num=(Integer)notice.get(0).get("num");
 %>
 <body>
-
 <form action="/naver/update-notice" method="post">
 	<input type="text" name="num" value=<%=num %> hidden>
 	content <input type="text" name="content">
 	<input type="submit" value="수정"> 
 </form>
-
 </body>
 </html>

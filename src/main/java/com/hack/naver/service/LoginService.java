@@ -24,7 +24,7 @@ public class LoginService {
 		User user;
 
 		for (int i = 0; i < elementList.size(); i++) {
-			if (elementList.get(i) != "NO") {
+			if (!(elementList.get(i).equals("NO"))) {
 				user = new User();
 				user.setId(id);
 				user.setElement(elementList.get(i).toString());
@@ -54,7 +54,6 @@ public class LoginService {
 	}
 
 	public List<Map<String, Object>> getUserElement(String userId) {
-
 		return loginDao.getUserElement(userId);
 	}
 

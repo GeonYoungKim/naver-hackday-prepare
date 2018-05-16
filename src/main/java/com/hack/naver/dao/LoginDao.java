@@ -18,17 +18,14 @@ public class LoginDao extends ConnectDB{
 
 	public void insertOneUser(String id) {
 		insert("user.insertOne", id);
-		
 	}
 
 	public void insertUserElement(Map<String, Object> map) {
 		insert("user_element.insert",map);
-		
 	}
 
 	public void deleteUserElement(String id) {
 		delete("user_element.delete", id);
-		
 	}
 
 	public List<Map<String, Object>> getUserElement(String userId) {
@@ -37,6 +34,5 @@ public class LoginDao extends ConnectDB{
 
 	public List<Map<String,Object>> selectOneUserGroup(Map<String, Object> map) {
 		return (List<Map<String,Object>>)selectList("user_element.selectOneUserGroup",map);
-		
 	}
 }

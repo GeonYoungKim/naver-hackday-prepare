@@ -1,8 +1,10 @@
 package com.hack.naver.model;
 
 public class User {
+	
 	private String id;
 	private String element;
+	
 	public String getId() {
 		return id;
 	}

@@ -4,6 +4,7 @@ public class Paging {
 
 	private int no;
 	private int unit;
+	
 	public int getNo() {
 		return no;
 	}

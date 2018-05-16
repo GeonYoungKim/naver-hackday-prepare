@@ -34,7 +34,6 @@ public class LoginController{
 		}else {
 			return "redirect:/notice";
 		}
-		
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST,produces="text/plain;charset=UTF-8")
@@ -49,15 +48,11 @@ public class LoginController{
 		String B=(request.getParameter("B")!=null)?"B":"NO";
 		String C=(request.getParameter("C")!=null)?"C":"NO";
 		
-		if(A.equals("NO")&&B.equals("NO")&&C.equals("NO")) {
-			elementList.add("NO");
-		}else {
-			elementList.add(A);
-			elementList.add(B);
-			elementList.add(C);
-			elementList.add("NO");	
-		}
-		
+		elementList.add(A);
+		elementList.add(B);
+		elementList.add(C);
+		elementList.add("NO");
+
 		loginService.login(id,elementList);
 		session.setAttribute("userId",id);
 		return "redirect:/notice";

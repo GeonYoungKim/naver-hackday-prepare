@@ -4,6 +4,7 @@ public class NoticeElement {
 
 	private int num;
 	private String element;
+	
 	public int getNum() {
 		return num;
 	}

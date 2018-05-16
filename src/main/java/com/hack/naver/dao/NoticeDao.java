@@ -29,7 +29,6 @@ public class NoticeDao extends ConnectDB{
 
 	public void deleteNoticeElement(int num) {
 		delete("notice_element.delete", num);
-		
 	}
 
 	public void deleteNotice(int num) {
@@ -37,7 +36,6 @@ public class NoticeDao extends ConnectDB{
 	}
 
 	public List<Map<String, Object>> selectNotice(int num) {
-		
 		return (List<Map<String, Object>>)selectList("notice.selectOne",num);
 	}
 
@@ -50,7 +48,6 @@ public class NoticeDao extends ConnectDB{
 	}
 
 	public int selectLogoutCount(String id) {
-		
 		return (Integer)selectOne("user.selectUserCount",id);
 	}
 
@@ -59,8 +56,7 @@ public class NoticeDao extends ConnectDB{
 	}
 
 	public void updateCount(Map<String, Object> map) {
-		update("user.updateLogoutCount", map);
-		
+		update("user.updateLogoutCount", map);		
 	}
 
 }

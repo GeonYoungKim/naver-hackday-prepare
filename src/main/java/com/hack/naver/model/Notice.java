@@ -1,9 +1,11 @@
 package com.hack.naver.model;
 
 public class Notice {
+	
 	private int num;
 	private String id;
 	private String content;
+	
 	public String getId() {
 		return id;
 	}

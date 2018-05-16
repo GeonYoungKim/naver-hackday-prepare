@@ -13,7 +13,6 @@ import com.hack.naver.service.LogoutService;
 
 @Controller
 public class LogoutController {
-
 	
 	@Resource(name = "LogoutService")
 	private LogoutService logoutService ;
@@ -28,5 +27,4 @@ public class LogoutController {
 		session.removeAttribute("userId");
 		return "redirect:/";
 	}
-	
 }

@@ -25,9 +25,6 @@ public class LogoutService {
 		
 		map.put("id", id);
 		map.put("list", userElementList);
-		logoutDao.insertUserCount(map);
-		
-	}
-	
-	
+		logoutDao.insertUserCount(map);		
+	}	
 }
