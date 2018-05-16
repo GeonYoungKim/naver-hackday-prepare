@@ -3,7 +3,7 @@
 
 <mapper namespace="user">
 
-	<select id="select_by_id" parameterType="String" resultType="hashmap">
+	<select id="selectById" parameterType="String" resultType="hashmap">
 		SELECT * FROM
 			naver_hack.user
 		WHERE
@@ -16,12 +16,20 @@
 		 VALUES 
 		  (#{id});
 	</insert>
-	<insert id="user_element" parameterType="java.util.Map">
-		INSERT INTO
-		 naver_hack.user_element (id,element)
-		VALUES 
-		<foreach collection="list" item="item" separator=" , ">
-            (#{item.id}, #{item.element})
-        </foreach>
-	</insert>
+	
+	<select id="selectUserCount" parameterType="String" resultType="Integer">
+		SELECT count FROM
+			naver_hack.user
+		WHERE
+			id=#{id};
+	</select>
+	
+	<update id="updateCount" parameterType="String">
+		UPDATE 
+			naver_hack.user 
+		SET 
+			count=count+1 
+		WHERE 
+			id=#{id}; 
+	</update>
 </mapper>

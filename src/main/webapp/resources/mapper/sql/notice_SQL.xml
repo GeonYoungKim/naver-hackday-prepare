@@ -51,7 +51,7 @@
 	</update>
 	<select id="selectAllList" parameterType="java.util.Map"
 		resultType="hashmap">
-		select count(c.num) as cnt
+		select count(c.num) as cnt, user.count
 		from
 		(
 			SELECT notice.num
@@ -62,6 +62,7 @@
 				ne.notice_element=#{item.element}
 			</foreach>
 			GROUP BY notice.num
-		) as c;
+		) as c, naver_hack.user user
+		WHERE user.id=#{id};
 	</select>
 </mapper>

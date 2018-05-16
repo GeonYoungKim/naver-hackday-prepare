@@ -3,17 +3,21 @@
 
 <mapper namespace="logout">
 
-<select id="insertUserCount" parameterType="java.util.Map" resultType="hashmap">
-	SELECT 
-		* 
-	FROM 
-		naver_hack.user_element 
-	WHERE 
-		id=#{id} and 
-		<foreach collection="list" item="item" open=" ( "
-			close=" ) " separator=" or ">
-			element=#{item}
-		</foreach>
+	<select id="insertUserCount" parameterType="java.util.Map" resultType="hashmap">
+		UPDATE user u
+		SET u.count=(
+			SELECT count(c.num) as cnt
+			FROM
+			(
+				SELECT notice.num
+				FROM naver_hack.notice notice, naver_hack.notice_element ne
+				WHERE notice.num=ne.num and
+				<foreach collection="list" item="item" open=" ( "
+					close=" ) " separator=" or ">
+					ne.notice_element=#{item.element}
+				</foreach>
+				GROUP BY notice.num
+			) as c)
+		WHERE id=#{id};
 	</select>
-
 </mapper>

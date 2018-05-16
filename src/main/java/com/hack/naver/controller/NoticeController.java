@@ -28,7 +28,7 @@ public class NoticeController {
 	@RequestMapping(value = "/notice", method = RequestMethod.GET)
 	public String paging(HttpServletRequest request,HttpSession sesstion) {
 		System.out.println("notice - GET");
-		
+		String id=sesstion.getAttribute("userId").toString();
 		int unit=10;
 		int pagingNo=1;
 		try{
@@ -38,9 +38,9 @@ public class NoticeController {
 		}catch (Exception e) {
 		}
 		
-		List<Map<String,Object>> userElement=loginService.getUserElement(((String)sesstion.getAttribute("userId")));
+		List<Map<String,Object>> userElement=loginService.getUserElement(id);
 		
-		Map<String, Object> map=noticeService.select(pagingNo,unit,userElement);
+		Map<String, Object> map=noticeService.select(pagingNo,unit,userElement,id);
 		request.setAttribute("map", map);
 		request.setAttribute("unit", unit);
 		return "notice";

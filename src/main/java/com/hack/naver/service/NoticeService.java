@@ -19,21 +19,32 @@ public class NoticeService {
 	@Resource(name = "NoticeDao")
 	private NoticeDao noticeDao;
 
-	public Map<String, Object> select(int pagingNo, int unit, List<Map<String, Object>> userElement) {
+	public Map<String, Object> select(int pagingNo, int unit, List<Map<String, Object>> userElement,String id) {
 
 		Map<String, Object> map = new HashMap<String, Object>();
 		List<Integer> footerList = new ArrayList<Integer>();
 
+		//int count= noticeDao.selectLogoutCount(id);
+		
 		map.put("no", (pagingNo - 1) * unit);
 		map.put("unit", unit);
 		map.put("userElement", userElement);
-
+		map.put("id",id);
 		List<Map<String, Object>> tableList = (userElement.size() == 0) ? new ArrayList<Map<String, Object>>()
 				: noticeDao.selectPaging(map);
 		Map<String, Object> allMap = (userElement.size() == 0) ? new HashMap<String, Object>()
 				: noticeDao.selectAllPaging(map);
 
 		int footerNo = pagingNo / unit;
+		
+		if((long) allMap.get("cnt")>(Integer)allMap.get("count")) {
+			System.out.println("YES");
+			map.put("alarm", "YES");
+		}else {
+			System.out.println("NO");
+			map.put("alarm", "NO");
+		}
+		
 		long allNo = ((long) allMap.get("cnt")) / unit;
 		if (pagingNo % 10 == 0) {
 			for (int i = ((footerNo - 1) * unit) + 1; i <= ((footerNo) * unit) && i <= allNo + 1; i++) {
@@ -78,6 +89,7 @@ public class NoticeService {
 
 		map.put("list", list);
 		noticeDao.insertNoticeElement(map);
+		noticeDao.updateUserCount(id);
 
 	}
 

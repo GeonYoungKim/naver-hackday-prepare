@@ -18,9 +18,5 @@ public class LogoutDao extends ConnectDB{
 
 	public void insertUserCount(Map<String, Object> map) {
 		selectOne("logout.insertUserCount", map);
-		
 	}
-	
-	
-
 }

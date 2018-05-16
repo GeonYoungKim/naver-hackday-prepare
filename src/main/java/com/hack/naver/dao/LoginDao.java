@@ -13,7 +13,7 @@ import com.hack.naver.model.User;
 public class LoginDao extends ConnectDB{
 
 	public Map<String,Object> selectOneUser(String id) {
-		return (Map<String,Object>)selectOne("user.select_by_id", id);
+		return (Map<String,Object>)selectOne("user.selectById", id);
 	}
 
 	public void insertOneUser(String id) {

@@ -15,14 +15,17 @@
 	System.out.println(map);
 	int before=(Integer)((List)map.get("footerList")).get(0);
 	int after=(Integer)((List)map.get("footerList")).get(((List)map.get("footerList")).size()-1);
-	String id=(String)session.getAttribute("userId");
+	String id=session.getAttribute("userId").toString();
 	int unit=(Integer)request.getAttribute("unit");
+	String alarm=map.get("alarm").toString();
+	System.out.println(alarm);
 %>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 <script src="http://ajax.cdnjs.com/ajax/libs/json2/20110223/json2.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.0.3/sockjs.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js"></script>
 <script>
+
 function chageLangSelect(){
     var unitSelect = document.getElementById("unit");
     // select element에서 선택된 option의 value가 저장된다.
@@ -68,6 +71,11 @@ function noticeDelete(userId,num,noticeId){
 }
 var stompClient=null;
 function connect(){
+	console.log("load");
+	var alarmFlag="<%=alarm%>";
+	if(alarmFlag=="YES"){
+		alert("새로운 공지가 있습니다.");
+	}
 	var socket = new SockJS('/naver/hello');
 	stompClient=Stomp.over(socket);
 	stompClient.connect({}, function(frame) {
@@ -98,9 +106,15 @@ function showResult(message) {
 					}
 				});
 }
+
+function logout() {
+	disconnect();
+	location.href="/naver/logout";
+}
 </script>
 <body onload="connect()">
-<div><button onclick="location.href='/naver/logout'">로그아웃</button></div>
+
+<div><button onclick="logout()">로그아웃</button></div>
 	<table BORDER="1" BORDERCOLOR="black" CELLPADDING="5" ALIGN="center">
 		<TR>
 			<TH align="center" WIDTH="70">컨텐츠</TH>

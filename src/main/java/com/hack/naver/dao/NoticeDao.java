@@ -49,4 +49,14 @@ public class NoticeDao extends ConnectDB{
 		return (Map<String, Object>)selectOne("notice.selectAllList", map);
 	}
 
+	public int selectLogoutCount(String id) {
+		
+		return (Integer)selectOne("user.selectUserCount",id);
+	}
+
+	public void updateUserCount(String id) {
+		update("user.updateCount", id);
+		
+	}
+
 }
