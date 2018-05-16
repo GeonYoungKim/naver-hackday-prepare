@@ -16,65 +16,65 @@ import com.hack.naver.model.User;
 public class LoginService {
 	@Resource(name = "LoginDao")
 	private LoginDao loginDao;
-	
-	
-	
-	private void insertUserElement(String id,List elementList) {
-	
-		Map<String, Object> map = new HashMap<String,Object>();
-		List<User> list=new ArrayList<User>();
+
+	private void insertUserElement(String id, List elementList) {
+
+		Map<String, Object> map = new HashMap<String, Object>();
+		List<User> list = new ArrayList<User>();
 		User user;
-		int count=0;
-		for(int i=0;i<elementList.size();i++) {
-			if(elementList.get(i)!="NO"){
-				count++;
-				user=new User();
+
+		for (int i = 0; i < elementList.size(); i++) {
+			if (elementList.get(i) != "NO") {
+				user = new User();
 				user.setId(id);
 				user.setElement(elementList.get(i).toString());
 				list.add(user);
 			}
 		}
-		if(count==0) {
-			return;
-		}
+
+		user = new User();
+		user.setId(id);
+		user.setElement("NO");
+		list.add(user);
+
 		map.put("list", list);
 		loginDao.insertUserElement(map);
 	}
-	
-	public void login(String id,List elementList) {
-		
-		Map<String,Object> selectUser=loginDao.selectOneUser(id);
-		if(selectUser!=null) {
+
+	public void login(String id, List elementList) {
+
+		Map<String, Object> selectUser = loginDao.selectOneUser(id);
+		if (selectUser != null) {
 			loginDao.deleteUserElement(id);
-			insertUserElement(id,elementList);
-		}else {
+			insertUserElement(id, elementList);
+		} else {
 			loginDao.insertOneUser(id);
-			insertUserElement(id,elementList);
+			insertUserElement(id, elementList);
 		}
 	}
 
 	public List<Map<String, Object>> getUserElement(String userId) {
-		
+
 		return loginDao.getUserElement(userId);
 	}
 
-	public String selectOneUserGroup(String myId,String noticeId, Map<String, Object> params) {
-		Map<String, Object> map = new HashMap<String,Object>();
-		List<String> list=new ArrayList<String>();
-		
-		if(!(myId.equals(noticeId))) {
-			for(Object object:params.values()) {
+	public String selectOneUserGroup(String myId, String noticeId, Map<String, Object> params) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		List<String> list = new ArrayList<String>();
+
+		if (!(myId.equals(noticeId))) {
+			for (Object object : params.values()) {
 				list.add(object.toString());
 			}
 			map.put("list", list);
 			map.put("id", myId);
-			List<Map<String,Object>> result=loginDao.selectOneUserGroup(map);
-			if(result.size()==0) {
+			List<Map<String, Object>> result = loginDao.selectOneUserGroup(map);
+			if (result.size() == 0) {
 				return "false";
-			}else {
+			} else {
 				return "true";
 			}
-		}else {
+		} else {
 			return "false";
 		}
 	}

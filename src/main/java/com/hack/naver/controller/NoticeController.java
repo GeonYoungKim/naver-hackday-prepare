@@ -28,8 +28,8 @@ public class NoticeController {
 	@RequestMapping(value = "/notice", method = RequestMethod.GET)
 	public String paging(HttpServletRequest request,HttpSession sesstion) {
 		System.out.println("notice - GET");
-		int unit=10;
 		
+		int unit=10;
 		int pagingNo=1;
 		try{
 			unit=Integer.parseInt(request.getParameter("unit"));
@@ -62,9 +62,15 @@ public class NoticeController {
 		String B=(request.getParameter("B")!=null)?"B":"NO";
 		String C=(request.getParameter("C")!=null)?"C":"NO";	
 		
-		elementList.add(A);
-		elementList.add(B);
-		elementList.add(C);
+		if(A.equals("NO")&&B.equals("NO")&&C.equals("NO")) {
+			elementList.add("NO");
+		}else {
+			elementList.add(A);
+			elementList.add(B);
+			elementList.add(C);	
+			elementList.add("NO");
+		}
+		
 		noticeService.insertNotice(id,elementList,content);
 		return "redirect:/notice";
 	}

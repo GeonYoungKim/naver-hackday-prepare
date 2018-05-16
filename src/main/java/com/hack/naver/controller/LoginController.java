@@ -26,9 +26,15 @@ public class LoginController{
 	private LoginService loginService;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String main(HttpServletRequest request) {
+	public String main(HttpServletRequest request,HttpSession session) {
 		System.out.println("login - GET");
-		return "login";
+		
+		if(session.getAttribute("userId")==null) {
+			return "login";	
+		}else {
+			return "redirect:/notice";
+		}
+		
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST,produces="text/plain;charset=UTF-8")
@@ -42,9 +48,16 @@ public class LoginController{
 		String A=(request.getParameter("A")!=null)?"A":"NO";
 		String B=(request.getParameter("B")!=null)?"B":"NO";
 		String C=(request.getParameter("C")!=null)?"C":"NO";
-		elementList.add(A);
-		elementList.add(B);
-		elementList.add(C);
+		
+		if(A.equals("NO")&&B.equals("NO")&&C.equals("NO")) {
+			elementList.add("NO");
+		}else {
+			elementList.add(A);
+			elementList.add(B);
+			elementList.add(C);
+			elementList.add("NO");	
+		}
+		
 		loginService.login(id,elementList);
 		session.setAttribute("userId",id);
 		return "redirect:/notice";

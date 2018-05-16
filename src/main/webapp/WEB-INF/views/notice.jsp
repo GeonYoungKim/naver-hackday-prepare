@@ -100,6 +100,7 @@ function showResult(message) {
 }
 </script>
 <body onload="connect()">
+<div><button onclick="location.href='/naver/logout'">╥н╠в╬ф©Т</button></div>
 	<table BORDER="1" BORDERCOLOR="black" CELLPADDING="5" ALIGN="center">
 		<TR>
 			<TH align="center" WIDTH="70">даеыцВ</TH>

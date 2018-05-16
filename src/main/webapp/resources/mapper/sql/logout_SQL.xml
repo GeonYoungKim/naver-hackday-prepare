@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="logout">
+
+<select id="insertUserCount" parameterType="java.util.Map" resultType="hashmap">
+	SELECT 
+		* 
+	FROM 
+		naver_hack.user_element 
+	WHERE 
+		id=#{id} and 
+		<foreach collection="list" item="item" open=" ( "
+			close=" ) " separator=" or ">
+			element=#{item}
+		</foreach>
+	</select>
+
+</mapper>
