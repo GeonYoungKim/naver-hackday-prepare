@@ -8,9 +8,12 @@ import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -18,8 +21,8 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 public class UploadController {
 	
 	@RequestMapping(value = "/upload-file", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
-	public String uploadFile(MultipartHttpServletRequest mHttpServletRequest) throws UnsupportedEncodingException {
-		System.out.println("uploaa");
+	public String uploadFile(MultipartHttpServletRequest mHttpServletRequest,HttpServletRequest request) throws UnsupportedEncodingException {
+		System.out.println("upload");
 		List<MultipartFile> fileList = mHttpServletRequest.getFiles("file");
 		for (MultipartFile multipartFile : fileList) {
 			if (!multipartFile.isEmpty()) {
@@ -29,10 +32,9 @@ public class UploadController {
 						|| orginFileName.endsWith(".tsv ")) {
 					String rootPath = "C:\\Users\\c2619\\Desktop\\gunyoungkim";
 					File dir = new File(rootPath + File.separator + "naverFiles");
-					if (!dir.exists())
-						dir.mkdirs();
-
-					// Create the file on server
+					if (!dir.exists()) {
+						dir.mkdirs();						
+					}
 
 					File serverFile = new File(dir.getAbsolutePath() + File.separator + orginFileName);
 
@@ -46,19 +48,32 @@ public class UploadController {
 							}
 							stream.flush();
 						}
+						request.setAttribute("fileUploadResult", "success");
+						return "success";
 					} catch (IOException e) {
 						System.out.println("error : " + e.getMessage());
+						request.setAttribute("fileUploadResult", "error");
+						return "error";
 					}
+				}else {
+					request.setAttribute("fileUploadResult", "fail");
+					return "fail";
 				}
-
 			}
 		}
-
 		return "redirect:/upload-file-form";
 	}
 
 	@RequestMapping(value = "/upload-file-form")
-	public String uploadFileForm() {
+	public String uploadFileForm(HttpServletRequest request) {
+		request.setAttribute("form", "form");
+		return "upload_file_form";
+	}
+	@RequestMapping(value = "/uploadTest", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
+	public String uploadTest(HttpServletRequest request,MultipartHttpServletRequest mHttpServletRequest) {
+		System.out.println("upload!!!");
+		List<MultipartFile> fileList = mHttpServletRequest.getFiles("data");
+		System.out.println(fileList.get(0));
 		return "upload_file_form";
 	}
 }
