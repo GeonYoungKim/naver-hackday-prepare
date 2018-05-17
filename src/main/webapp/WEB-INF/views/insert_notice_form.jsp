@@ -110,6 +110,14 @@ function upload(file,noticeNum){
             type: 'post'
    })	
 }
+$(document).ready(function () {
+    $('#content').keyup(function (e){
+        var content = $(this).val();
+        $('#counter').html(content.length + '/1000');
+        $('#content').keyup();
+    });
+    
+});
 </script>
 <body>	
 		<!--유저 아이디 전송-->

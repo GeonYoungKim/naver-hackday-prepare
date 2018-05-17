@@ -22,7 +22,8 @@ public class FileService {
 		
 		fileDao.insertFile(map);		
 	}
-	
-	
-	
+
+	public Map<String, Object> selectOneFile(int fileNum) {
+		return fileDao.selectOneFile(fileNum);
+	}
 }

@@ -2,7 +2,6 @@ package com.hack.naver.controller;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,8 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import com.hack.naver.service.LoginService;
 import com.hack.naver.service.NoticeService;
 
@@ -112,4 +109,15 @@ public class NoticeController {
 		request.setAttribute("notice", notice);
 		return "update_notice_form";
 	}
+	@RequestMapping(value = "/notice-select")
+	public String noticeSelect(HttpServletRequest request) throws UnsupportedEncodingException {
+		request.setCharacterEncoding("UTF-8");
+		String num=request.getParameter("num");
+		
+		Map<String,Object> map=noticeService.selectOneNotice(num);
+		request.setAttribute("selectOneNotice", map);
+		return "select_one_notice";
+		
+	}
+	
 }

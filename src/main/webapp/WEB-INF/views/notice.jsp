@@ -37,7 +37,7 @@
 			for (int i = 0; i < ((List) map.get("tableList")).size(); i++) {
 		%>
 		<TR>
-			<td align="center" WIDTH="70"><%=((List<Map<String,Object>>)map.get("tableList")).get(i).get("content") %></td>
+			<td align="center" WIDTH="70"><a href="/naver/notice-select?num=<%=((Integer)((List<Map<String,Object>>)map.get("tableList")).get(i).get("num")) %>"><%=((List<Map<String,Object>>)map.get("tableList")).get(i).get("content") %></a></td>
 			<td align="center" WIDTH="70"><%=((List<Map<String,Object>>)map.get("tableList")).get(i).get("notice_element") %></td>
 			<td><button onclick="noticeUpdate('<%=id%>','<%=((List<Map<String,Object>>)map.get("tableList")).get(i).get("num")%>','<%=((List<Map<String,Object>>)map.get("tableList")).get(i).get("user_id")%>')">수정</button></td>
 			<td><button onclick="noticeDelete('<%=id%>','<%=((List<Map<String,Object>>)map.get("tableList")).get(i).get("num")%>','<%=((List<Map<String,Object>>)map.get("tableList")).get(i).get("user_id")%>','<%=((Integer)map.get("pagingNo"))%>','<%=unit%>')">삭제</button></td>

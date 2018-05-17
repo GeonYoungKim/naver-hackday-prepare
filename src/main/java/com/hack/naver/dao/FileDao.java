@@ -14,4 +14,7 @@ public class FileDao extends ConnectDB {
 		insert("file.insert", map);
 	}
 
+	public Map<String, Object> selectOneFile(int fileNum) {		
+		return (Map<String, Object>)selectOne("file.selectOneFile", fileNum);
+	}
 }

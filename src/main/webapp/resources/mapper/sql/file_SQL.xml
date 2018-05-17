@@ -10,4 +10,21 @@
 			(#{fileRoute},#{noticeNum});
 	</insert>
 	
+	<select id="select" parameterType="Integer" resultType="hashmap">
+		SELECT 
+			* 
+		FROM 
+			naver_hack.file 
+		WHERE
+			notice_num=#{id};
+	</select>
+	
+	<select id="selectOneFile" parameterType="Integer" resultType="hashmap">
+		SELECT 
+			* 
+		FROM 
+			naver_hack.file 
+		WHERE
+			file_num=#{id};
+	</select>
 </mapper>

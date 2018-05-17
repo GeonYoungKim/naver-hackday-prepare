@@ -7,16 +7,6 @@ var socket = new SockJS('/naver/hello');
 stompClient = Stomp.over(socket);
 
 
-
-$(document).ready(function () {
-    $('#content').keyup(function (e){
-        var content = $(this).val();
-        $('#counter').html(content.length + '/1000');
-        $('#content').keyup();
-    });
-    
-});
-
 function chageLangSelect(){
     var unitSelect = document.getElementById("unit");
     // select element에서 선택된 option의 value가 저장된다.

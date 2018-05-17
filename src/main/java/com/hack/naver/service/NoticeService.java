@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import com.hack.naver.dao.NoticeDao;
 import com.hack.naver.model.Notice;
 import com.hack.naver.model.NoticeElement;
-import com.hack.naver.model.Paging;
 
 @Service("NoticeService")
 public class NoticeService {
@@ -105,5 +104,17 @@ public class NoticeService {
 		map.put("num", num);
 		map.put("content", content);
 		noticeDao.updateNotice(map);
+	}
+
+	public Map<String,Object> selectOneNotice(String num) {
+		Map<String,Object> map=new HashMap<String, Object>();
+		
+		int noticeNum=Integer.parseInt(num);
+		List<Map<String,Object>> notice=noticeDao.selectNotice(noticeNum);
+		List<Map<String,Object>> file=noticeDao.selectFiles(noticeNum);
+		map.put("notice", notice);
+		map.put("file",file);
+		return map;
+		
 	}
 }

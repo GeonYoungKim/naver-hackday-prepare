@@ -59,4 +59,9 @@ public class NoticeDao extends ConnectDB{
 		update("user.updateLogoutCount", map);		
 	}
 
+	public List<Map<String, Object>> selectFiles(int noticeNum) {
+		
+		return (List<Map<String, Object>>)selectList("file.select", noticeNum);
+	}
+
 }
