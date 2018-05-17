@@ -15,7 +15,6 @@ public class FileService {
 	private FileDao fileDao;
 
 	public void insertFile(String noticeNum, String fileRoute) {
-		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("noticeNum", Integer.parseInt(noticeNum));
 		map.put("fileRoute", fileRoute);

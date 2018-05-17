@@ -5,14 +5,18 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="resources/js/login.js"></script>
+
+
 </head>
 <body>
-	<form action="/naver/login" method="post">
-		ID : <input type="text" name="id" /><br/><br/>
-		 <input type="checkbox" name="A" value="A">A 
-		 <input type="checkbox" name="B" value="B">B 
-		 <input type="checkbox" name="C" value="C">C 
-		 <input type="submit" value="가입"/>
-	</form>
+	
+		ID : <input type="text" id="id" /><br/><br/>
+		 <input type="checkbox" id="A" value="A">A 
+		 <input type="checkbox" id="B" value="B">B 
+		 <input type="checkbox" id="C" value="C">C 
+		 <button onclick="login()">가입</button>
+	
 </body>
 </html>

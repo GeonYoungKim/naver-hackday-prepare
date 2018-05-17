@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -27,11 +28,37 @@ public class NoticeController {
 	
 	@Resource(name = "LoginService")
 	private LoginService loginService;
+	
+	@RequestMapping(value = "/insert-notice-form")
+	public String insertNoticeForm(HttpServletRequest request) {
+		return "insert_notice_form";
+	}
 
-	@RequestMapping(value = "/notice", method = RequestMethod.GET)
-	public String paging(HttpServletRequest request, HttpSession sesstion) {
-		System.out.println("notice - GET");
-		String id = sesstion.getAttribute("userId").toString();
+	@RequestMapping(value = "/update-notice-form")
+	public String updateNoticeForm(HttpServletRequest request, HttpServletResponse response,HttpSession session) throws UnsupportedEncodingException {
+		System.out.println("noticeUpdateForm - GET");
+		request.setCharacterEncoding("UTF-8");
+		response.setCharacterEncoding("UTF-8");
+
+		int num = Integer.parseInt(request.getParameter("num"));
+		request.setAttribute("id", session.getAttribute("userId"));
+		request.setAttribute("num", num);
+		return "update_notice_form";
+	}
+	@RequestMapping(value = "/notice-select")
+	public String noticeSelect(HttpServletRequest request) throws UnsupportedEncodingException {
+		request.setCharacterEncoding("UTF-8");
+		String num=request.getParameter("num");
+		
+		Map<String,Object> map=noticeService.selectOneNotice(num);
+		request.setAttribute("selectOneNotice", map);
+		return "select_one_notice";
+		
+	}
+	@RequestMapping(value = "/notice", method = RequestMethod.POST,produces="text/plain;charset=UTF-8")
+	public String paging(HttpServletRequest request) {
+		String id=request.getParameter("id");
+		System.out.println("notice - POST");		
 		int unit = 10;
 		int pagingNo = 1;
 		try {
@@ -44,80 +71,8 @@ public class NoticeController {
 		Map<String, Object> map = noticeService.select(pagingNo, unit, userElement, id);
 		request.setAttribute("map", map);
 		request.setAttribute("unit", unit);
+		request.setAttribute("id", id);
 		return "notice";
-	}
-
-	@RequestMapping(value = "/insert-notice-form")
-	public String insertNoticeForm(HttpServletRequest request) {
-		System.out.println("noticeInsertForm - GET");
-		return "insert_notice_form";
-	}
-
-	@RequestMapping(value = "/insert-notice", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
-	public @ResponseBody String insertNotice(@RequestBody Map<String,Object> data,HttpServletRequest request) throws UnsupportedEncodingException {
-		System.out.println("noticeInsert - POST");
-		request.setCharacterEncoding("UTF-8");
-		
-		List<String> elementList = new ArrayList<String>();
-		
-		String id = data.get("userId").toString();
-		String content = data.get("content").toString();
-		String A = data.get("A").toString();
-		String B = data.get("B").toString();
-		String C = data.get("C").toString();
-
-		elementList.add(A);
-		elementList.add(B);
-		elementList.add(C);
-		elementList.add("NO");
-
-		String noticeNum=noticeService.insertNotice(id, elementList, content);
-		return noticeNum;
-	}
-
-	@RequestMapping(value = "/delete-notice", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
-	public void deleteNotice(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
-		System.out.println("noticeDelete - POST");
-		request.setCharacterEncoding("UTF-8");
-		response.setCharacterEncoding("UTF-8");
-
-		int num = Integer.parseInt(request.getParameter("noticeNum"));
-		noticeService.deleteNotice(num);
-	}
-
-	@RequestMapping(value = "/update-notice", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
-	public String updateNotice(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
-		System.out.println("noticeUpdate - POST");
-		request.setCharacterEncoding("UTF-8");
-		response.setCharacterEncoding("UTF-8");
-
-		int num = Integer.parseInt(request.getParameter("num"));
-		String content = request.getParameter("content");
-
-		noticeService.updateNotice(num, content);
-		return "redirect:/notice";
-	}
-
-	@RequestMapping(value = "/update-notice-form")
-	public String updateNoticeForm(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
-		System.out.println("noticeUpdateForm - GET");
-		request.setCharacterEncoding("UTF-8");
-		response.setCharacterEncoding("UTF-8");
-
-		int num = Integer.parseInt(request.getParameter("num"));
-		List<Map<String, Object>> notice = noticeService.selectNotice(num);
-		request.setAttribute("notice", notice);
-		return "update_notice_form";
-	}
-	@RequestMapping(value = "/notice-select")
-	public String noticeSelect(HttpServletRequest request) throws UnsupportedEncodingException {
-		request.setCharacterEncoding("UTF-8");
-		String num=request.getParameter("num");
-		
-		Map<String,Object> map=noticeService.selectOneNotice(num);
-		request.setAttribute("selectOneNotice", map);
-		return "select_one_notice";
-		
 	}
 	
 }

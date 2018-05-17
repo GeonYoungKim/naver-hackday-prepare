@@ -15,24 +15,7 @@
 	System.out.println(map);
 %>
 <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-<script type="text/javascript">
-	function download(fileNum) {
-		console.log(fileNum);
-		$.ajax({
-	        url: "http://localhost:8080/naver/download-file",
-	        contentType: false,
-	        processData: false,
-	        contentType: "application/json",
-	        data: JSON.stringify({
-	    		fileNum:fileNum
-	    	}),                         // Setting the data attribute of ajax with file_data
-	        type: 'post',
-	        success : function(data) {
-	        	alert(data);
-	        }
-		});
-	}
-</script>
+
 </head>
 <body>
 	내용 :
@@ -44,7 +27,7 @@
 				String name = route.substring(route.lastIndexOf("\\") + 1);
 				int fileNum=Integer.parseInt(((Map) files.get(i)).get("file_num").toString());
 		%>
-		<li><a href="/naver/download-file?fileNum=<%=fileNum%>"><%=name %></a></li>
+		<li><a href="/naver/file/download/<%=fileNum%>"><%=name %></a></li>
 		<%
 			}
 		%>
