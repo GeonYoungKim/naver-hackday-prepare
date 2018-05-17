@@ -61,7 +61,7 @@ public class NoticeService {
 		return map;
 	}
 
-	public void insertNotice(String id, List<String> elementList, String content) {
+	public String insertNotice(String id, List<String> elementList, String content) {
 		Notice notice = new Notice();
 		notice.setId(id);
 		notice.setContent(content);
@@ -88,7 +88,7 @@ public class NoticeService {
 		map.put("list", list);
 		noticeDao.insertNoticeElement(map);
 		noticeDao.updateUserCount(id);
-
+		return notice.getNum()+"";
 	}
 
 	public void deleteNotice(int num) {

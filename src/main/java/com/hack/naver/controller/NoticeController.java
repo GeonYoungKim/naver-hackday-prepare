@@ -2,6 +2,7 @@ package com.hack.naver.controller;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -11,10 +12,13 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.hack.naver.service.LoginService;
 import com.hack.naver.service.NoticeService;
 
@@ -36,7 +40,6 @@ public class NoticeController {
 		try {
 			unit = Integer.parseInt(request.getParameter("unit"));
 			pagingNo = Integer.parseInt(request.getParameter("no"));
-
 		} catch (Exception e) {}
 
 		List<Map<String, Object>> userElement = loginService.getUserElement(id);
@@ -54,23 +57,25 @@ public class NoticeController {
 	}
 
 	@RequestMapping(value = "/insert-notice", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
-	public String insertNotice(HttpServletRequest request) throws UnsupportedEncodingException {
+	public @ResponseBody String insertNotice(@RequestBody Map<String,Object> data,HttpServletRequest request) throws UnsupportedEncodingException {
 		System.out.println("noticeInsert - POST");
 		request.setCharacterEncoding("UTF-8");
+		
 		List<String> elementList = new ArrayList<String>();
-		String id = request.getParameter("userId");
-		String content = request.getParameter("content");
-		String A = (request.getParameter("A") != null) ? "A" : "NO";
-		String B = (request.getParameter("B") != null) ? "B" : "NO";
-		String C = (request.getParameter("C") != null) ? "C" : "NO";
+		
+		String id = data.get("userId").toString();
+		String content = data.get("content").toString();
+		String A = data.get("A").toString();
+		String B = data.get("B").toString();
+		String C = data.get("C").toString();
 
 		elementList.add(A);
 		elementList.add(B);
 		elementList.add(C);
 		elementList.add("NO");
 
-		noticeService.insertNotice(id, elementList, content);
-		return "redirect:/notice";
+		String noticeNum=noticeService.insertNotice(id, elementList, content);
+		return noticeNum;
 	}
 
 	@RequestMapping(value = "/delete-notice", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")

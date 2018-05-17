@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
@@ -17,13 +18,22 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.hack.naver.service.FileService;
+
 @Controller
 public class UploadController {
 	
+	@Resource(name="FileService")
+	private FileService fileService;
+	
 	@RequestMapping(value = "/upload-file", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
-	public String uploadFile(MultipartHttpServletRequest mHttpServletRequest,HttpServletRequest request) throws UnsupportedEncodingException {
+	public void uploadFile(MultipartHttpServletRequest mHttpServletRequest,HttpServletRequest request) throws UnsupportedEncodingException {
 		System.out.println("upload");
+		
+		String fileRoute;
+		String noticeNum=mHttpServletRequest.getParameter("noticeNum");
 		List<MultipartFile> fileList = mHttpServletRequest.getFiles("file");
+		
 		for (MultipartFile multipartFile : fileList) {
 			if (!multipartFile.isEmpty()) {
 				String orginFileName = new String(multipartFile.getOriginalFilename().getBytes("8859_1"), "UTF-8");
@@ -37,7 +47,7 @@ public class UploadController {
 					}
 
 					File serverFile = new File(dir.getAbsolutePath() + File.separator + orginFileName);
-
+					fileRoute=dir.getAbsolutePath() + File.separator + orginFileName;
 					try {
 						try (InputStream is = multipartFile.getInputStream();
 								BufferedOutputStream stream = new BufferedOutputStream(
@@ -47,21 +57,14 @@ public class UploadController {
 								stream.write(i);
 							}
 							stream.flush();
-						}
-						request.setAttribute("fileUploadResult", "success");
-						return "success";
+							fileService.insertFile(noticeNum,fileRoute);
+						}						
 					} catch (IOException e) {
 						System.out.println("error : " + e.getMessage());
-						request.setAttribute("fileUploadResult", "error");
-						return "error";
 					}
-				}else {
-					request.setAttribute("fileUploadResult", "fail");
-					return "fail";
 				}
 			}
 		}
-		return "redirect:/upload-file-form";
 	}
 
 	@RequestMapping(value = "/upload-file-form")
@@ -69,11 +72,5 @@ public class UploadController {
 		request.setAttribute("form", "form");
 		return "upload_file_form";
 	}
-	@RequestMapping(value = "/uploadTest", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
-	public String uploadTest(HttpServletRequest request,MultipartHttpServletRequest mHttpServletRequest) {
-		System.out.println("upload!!!");
-		List<MultipartFile> fileList = mHttpServletRequest.getFiles("data");
-		System.out.println(fileList.get(0));
-		return "upload_file_form";
-	}
+	
 }

@@ -6,20 +6,7 @@ var stompClient = null;
 var socket = new SockJS('/naver/hello');
 stompClient = Stomp.over(socket);
 
-function send() {
-	console.log("aa");
-	
-	var A = (document.getElementById('A').checked) ? 'A' : 'NO';
-	var B = (document.getElementById('B').checked) ? 'B' : 'NO';
-	var C = (document.getElementById('C').checked) ? 'C' : 'NO';
-	var id = document.getElementById('userId').value;
-	stompClient.send("/app/hello", {}, JSON.stringify({
-		'id' : id,
-		'A' : A,
-		'B' : B,
-		'C' : C
-	}));
-}
+
 
 $(document).ready(function () {
     $('#content').keyup(function (e){
@@ -118,3 +105,5 @@ function connect(alarm){
         });
     });
 }
+
+

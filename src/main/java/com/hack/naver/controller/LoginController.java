@@ -12,13 +12,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.hack.naver.service.LoginService;
 
-
-/**
- * Handles requests for the application home page.
- */
 
 @Controller
 public class LoginController{
