@@ -35,18 +35,15 @@ public class NoticeService {
 		Map<String, Object> allMap = (userElement.size() == 0) ? new HashMap<String, Object>() : noticeDao.selectAllPaging(map);
 
 		System.out.println(allMap);
-		
-		
-		
-		if((long) allMap.get("cnt")>(Integer)allMap.get("count")) {
-			map.put("count", (long) allMap.get("cnt"));
+		if((Long)allMap.get("cnt")>(Integer)allMap.get("count")) {
+			map.put("count", (Long) allMap.get("cnt"));
 			noticeDao.updateCount(map);
 			map.put("alarm", "YES");
 		}else {
 			map.put("alarm", "NO");
 		}
 		
-		long allNo = ((long) allMap.get("cnt")) / unit;
+		long allNo = ((Long) allMap.get("cnt")) / unit;
 		
 		int footerNo = pagingNo / 10;
 		if((pagingNo%10)==0) {
