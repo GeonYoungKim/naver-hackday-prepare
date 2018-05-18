@@ -11,7 +11,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.0.3/sockjs.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js"></script>
 <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-<script src="../../resources/js/insertNotice.js"></script>
+<script src="resources/js/insertNotice.js"></script>
 </head>
 <%
 	String userId=(String)session.getAttribute("userId");

@@ -15,12 +15,60 @@
 %>
 <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 <script src="resources/js/updateNotice.js"></script>
-<body>
+<script type="text/javascript">
+function selectNotice(num) {
+	var noticeNum=num;
+	
+	$.ajax({
+		url : "http://localhost:8080/naver/notice/select/"+noticeNum,
+		cache : false,
+		contentType: "application/json",
+		processData : false,		
+		type : 'post',
+		success : function(data) {
+			var obj=JSON.parse(data);
+			console.log(data);
+			document.getElementById("content").placeholder=obj[0].content;
+			for(var i = 0; i < obj.length; i++){ 
+				var fileName=obj[i].file_route.substring(obj[i].file_route.lastIndexOf("\\")+1,obj[i].file_route.length);
+				var option = $("<li>"+fileName+"<button onclick='fileDelete("+obj[i].file_num+","+noticeNum+")'"+">삭제</button></li>");
+                $('#files').append(option);
+            }
+		}
+	})
+	
+}
+
+function fileDelete(fileNum,noticeNum){
+	var jsFileNum=fileNum;
+	var jsNoticeNum=noticeNum;
+	if(confirm("정말 삭제 하시겠습니까?")){
+		$.ajax({
+            url: "http://localhost:8080/naver/file/delete/"+jsFileNum,
+            contentType: false,
+            processData: false,
+            type: 'post',
+            success : function(data) {
+            	location.href="/naver/update-notice-form?num="+jsNoticeNum;
+            }
+		})	
+	}else{
+		alert("삭제 취소 되었습니다.");
+	}
+}
+</script>
+
+
+<body onload="selectNotice('<%=num%>')">
 <input type="text" id="userId" value=<%=userId%> hidden>
 	<input type="text" id="num" name="num" value=<%=num%> hidden>
 	content
 	<input type="text" id="content" name="content">
+	<br/>
+	<list id="files">
+		
+	</list>
+	<input type="file" name="file" id="file" multiple /> 
 	<button onclick="update()">수정</button>
-
 </body>
 </html>

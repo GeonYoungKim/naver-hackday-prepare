@@ -21,7 +21,6 @@ function login() {
     	}),                         // Setting the data attribute of ajax with file_data
         type: 'post',
         success : function(data) {
-        	alert("시");
         	post("/naver/notice", {id: id});
         }
 	});

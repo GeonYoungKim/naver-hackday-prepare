@@ -17,4 +17,8 @@ public class FileDao extends ConnectDB {
 	public Map<String, Object> selectOneFile(int fileNum) {		
 		return (Map<String, Object>)selectOne("file.selectOneFile", fileNum);
 	}
+
+	public void deleteFile(int num) {
+		delete("file.delete", num);
+	}
 }

@@ -64,4 +64,8 @@ public class NoticeDao extends ConnectDB{
 		return (List<Map<String, Object>>)selectList("file.select", noticeNum);
 	}
 
+	public List<Map<String, Object>> selectNoticeFiles(int num) {
+		return (List<Map<String, Object>>)selectList("notice_file.select", num);
+	}
+
 }

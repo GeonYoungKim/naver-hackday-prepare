@@ -9,6 +9,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,11 +18,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.google.gson.Gson;
 import com.hack.naver.service.LoginService;
 import com.hack.naver.service.NoticeService;
 
 @RestController
 public class RestNoticeController {
+
+	private Gson gson=new Gson();
 	
 	@Resource(name = "NoticeService")
 	private NoticeService noticeService;
@@ -60,7 +64,7 @@ public class RestNoticeController {
 	}
 	
 	@RequestMapping(value = "/notice/update/{num}", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
-	public String updateNotice(@RequestBody Map<String,Object> data,HttpServletRequest request, HttpServletResponse response,@PathVariable("num") int num) throws UnsupportedEncodingException {
+	public void updateNotice(@RequestBody Map<String,Object> data,HttpServletRequest request, HttpServletResponse response,@PathVariable("num") int num) throws UnsupportedEncodingException {
 		System.out.println("noticeUpdate - POST");
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
@@ -68,6 +72,18 @@ public class RestNoticeController {
 		String content = data.get("content").toString();
 		String userId=data.get("userId").toString();
 		noticeService.updateNotice(num, content);
-		return "redirect:/notice?id="+userId;
+		
+	}
+	
+	@RequestMapping(value = "/notice/select/{num}", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
+	public @ResponseBody String selectNotice(HttpServletRequest request, HttpServletResponse response,@PathVariable("num") int num) throws UnsupportedEncodingException {
+		System.out.println("noticeUpdate - POST");
+		request.setCharacterEncoding("UTF-8");
+		response.setCharacterEncoding("UTF-8");
+		
+		List<Map<String,Object>> noticeFiles=noticeService.selectNoticeFiles(num);
+		
+		
+		return gson.toJson(noticeFiles);
 	}
 }

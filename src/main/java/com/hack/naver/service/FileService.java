@@ -25,4 +25,9 @@ public class FileService {
 	public Map<String, Object> selectOneFile(int fileNum) {
 		return fileDao.selectOneFile(fileNum);
 	}
+
+	public void deleteFile(int num) {
+		fileDao.deleteFile(num);
+		
+	}
 }

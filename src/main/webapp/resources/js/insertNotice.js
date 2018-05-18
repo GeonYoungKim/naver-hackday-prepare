@@ -40,34 +40,40 @@ function mySubmit() {
 			
         	var file_data = $("#file").prop("files");
         	var flag=false;
-        	
+        	var count=0;
         	for (var i = 0; i < file_data.length; i++) {
         		var fileName = file_data[i].name; // 파일명
         		if (fileName.indexOf('.png') != -1 || fileName.indexOf('.xslx') != -1 ||
         				fileName.indexOf('.xls') != -1 || fileName.indexOf('.txt') != -1 ||
         				fileName.indexOf('.tsv') != -1 || fileName.indexOf('.csv') != -1 ) {
         			//업로드 로직
-        			console.log("log1");
-        			upload(file_data[i],data);
+        			count++;
+        			continue;	        			
         		}else{
         			if(flag==true){
-        				//업로드 로직
-        				console.log("log2");
-        				upload(file_data[i],data);
+        				count++;
+        				continue;
         			}else{
         				if(confirm("지원하지 않는 파일 형식이 있습니다. 그래도 업로드 하시겠습니까?")){
-        					flag=true;
-        					//업로드 로직
-        					console.log("log3");
-        					upload(file_data[i],data);
-        				}else{
-        					return;
-        				}
-        			}				
-        		}
+            				count++;
+            				flag=true;
+            				continue;
+            			}else{	        				
+            				return;
+            			}
+        			}
+        			
+        		}				
         	}
-        }    
-	})	
+        	if(count==file_data.length){
+        		for (var i = 0; i < file_data.length; i++) {
+            		console.log("log1");
+            		upload(file_data[i],data,i,file_data.length-1,id);
+        		}
+            }
+        	
+        }
+	})
 	
 	stompClient.send("/app/hello", {}, JSON.stringify({
 		'id' : id,
@@ -75,24 +81,46 @@ function mySubmit() {
 		'B' : B,
 		'C' : C
 	}));
-	post("/naver/notice/", {id: id});
+	
 	
 	
 }
-function upload(file,noticeNum){
+function upload(file,noticeNum,i,end,id){
 	console.log(noticeNum);
-	var form_data = new FormData();                  // Creating object of FormData class
-	form_data.append("file",file)          
-	form_data.append("noticeNum",noticeNum)
-	$.ajax({
-            url: "http://localhost:8080/naver/file/upload",
-            dataType: 'script',
-            cache: false,
-            contentType: false,
-            processData: false,
-            data: form_data,                         // Setting the data attribute of ajax with file_data
-            type: 'post'
-   })	
+	var jsI=i;
+	var jsEnd=end;
+	var userId=id;
+	if(jsI==jsEnd){
+		var form_data = new FormData();                  // Creating object of FormData class
+		form_data.append("file",file)          
+		form_data.append("noticeNum",noticeNum)
+		$.ajax({
+	            url: "http://localhost:8080/naver/file/upload",
+	            dataType: 'script',
+	            cache: false,
+	            contentType: false,
+	            processData: false,
+	            data: form_data,                         // Setting the data attribute of ajax with file_data
+	            type: 'post',
+	            success : function(data) {
+	            	post("/naver/notice", {id: userId});
+	            }
+	   })	
+	}else{
+		var form_data = new FormData();                  // Creating object of FormData class
+		form_data.append("file",file)          
+		form_data.append("noticeNum",noticeNum)
+		$.ajax({
+	            url: "http://localhost:8080/naver/file/upload",
+	            dataType: 'script',
+	            cache: false,
+	            contentType: false,
+	            processData: false,
+	            data: form_data,                         // Setting the data attribute of ajax with file_data
+	            type: 'post'
+	   })	
+	}
+	
 }
 $(document).ready(function () {
     $('#content').keyup(function (e){

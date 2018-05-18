@@ -24,6 +24,8 @@ public class NoticeService {
 		List<Integer> footerList = new ArrayList<Integer>();
 
 		//int count= noticeDao.selectLogoutCount(id);
+		System.out.println(pagingNo+"="+unit);
+		
 		
 		map.put("no", (pagingNo - 1) * unit);
 		map.put("unit", unit);
@@ -32,7 +34,9 @@ public class NoticeService {
 		List<Map<String, Object>> tableList = (userElement.size() == 0) ? new ArrayList<Map<String, Object>>() : noticeDao.selectPaging(map);
 		Map<String, Object> allMap = (userElement.size() == 0) ? new HashMap<String, Object>() : noticeDao.selectAllPaging(map);
 
-		int footerNo = pagingNo / unit;
+		System.out.println(allMap);
+		
+		
 		
 		if((long) allMap.get("cnt")>(Integer)allMap.get("count")) {
 			map.put("count", (long) allMap.get("cnt"));
@@ -43,15 +47,19 @@ public class NoticeService {
 		}
 		
 		long allNo = ((long) allMap.get("cnt")) / unit;
-		if (pagingNo % 10 == 0) {
-			for (int i = ((footerNo - 1) * unit) + 1; i <= ((footerNo) * unit) && i <= allNo + 1; i++) {
+		
+		int footerNo = pagingNo / 10;
+		if((pagingNo%10)==0) {
+			System.out.println("10단위 클릭");
+			for(int i=(((footerNo-1)*10)+1);i<=(footerNo*10)&& i <= (allNo+1) ;i++) {
 				footerList.add(i);
 			}
-		} else {
-			for (int i = (footerNo * unit) + 1; i <= ((footerNo + 1) * unit) && i <= allNo + 1; i++) {
+		}else {
+			for(int i=((footerNo*10)+1);i<=((footerNo+1)*10)&& i <= (allNo+1);i++) {
 				footerList.add(i);
 			}
 		}
+
 		map.put("allNo", allNo + 1);
 		map.put("pagingNo", pagingNo);
 		map.put("footerList", footerList);
@@ -69,10 +77,10 @@ public class NoticeService {
 		Map<String, Object> map = new HashMap<String, Object>();
 		List<NoticeElement> list = new ArrayList<NoticeElement>();
 		NoticeElement noticeElement;
-	
+
 		for (int i = 0; i < elementList.size(); i++) {
 			if (!(elementList.get(i).equals("NO"))) {
-	
+
 				noticeElement = new NoticeElement();
 				noticeElement.setNum(notice.getNum());
 				noticeElement.setElement(elementList.get(i).toString());
@@ -87,7 +95,7 @@ public class NoticeService {
 		map.put("list", list);
 		noticeDao.insertNoticeElement(map);
 		noticeDao.updateUserCount(id);
-		return notice.getNum()+"";
+		return notice.getNum() + "";
 	}
 
 	public void deleteNotice(int num) {
@@ -106,15 +114,19 @@ public class NoticeService {
 		noticeDao.updateNotice(map);
 	}
 
-	public Map<String,Object> selectOneNotice(String num) {
-		Map<String,Object> map=new HashMap<String, Object>();
-		
-		int noticeNum=Integer.parseInt(num);
-		List<Map<String,Object>> notice=noticeDao.selectNotice(noticeNum);
-		List<Map<String,Object>> file=noticeDao.selectFiles(noticeNum);
+	public Map<String, Object> selectOneNotice(String num) {
+		Map<String, Object> map = new HashMap<String, Object>();
+
+		int noticeNum = Integer.parseInt(num);
+		List<Map<String, Object>> notice = noticeDao.selectNotice(noticeNum);
+		List<Map<String, Object>> file = noticeDao.selectFiles(noticeNum);
 		map.put("notice", notice);
-		map.put("file",file);
+		map.put("file", file);
 		return map;
-		
+
+	}
+
+	public List<Map<String, Object>> selectNoticeFiles(int num) {
+		return noticeDao.selectNoticeFiles(num);
 	}
 }

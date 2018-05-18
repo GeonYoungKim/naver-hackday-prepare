@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -134,4 +135,14 @@ public class RestFileController {
 			e.printStackTrace();
 		}
 	}
+	@RequestMapping(value = "/file/delete/{num}", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
+	public void deleteFile(HttpServletRequest request, HttpServletResponse response,@PathVariable("num") int num) throws UnsupportedEncodingException {
+		System.out.println("noticeUpdate - POST");
+		request.setCharacterEncoding("UTF-8");
+		response.setCharacterEncoding("UTF-8");
+		
+		fileService.deleteFile(num);
+	}
+	
+	
 }

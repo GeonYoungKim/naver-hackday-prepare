@@ -27,4 +27,12 @@
 		WHERE
 			file_num=#{id};
 	</select>
+	
+	<delete id="delete" parameterType="Integer">
+		DELETE FROM 
+			naver_hack.file 
+		WHERE 
+			file_num=#{num};
+	
+	</delete>
 </mapper>
