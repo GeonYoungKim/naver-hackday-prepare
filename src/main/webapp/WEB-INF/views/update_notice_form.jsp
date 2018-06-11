@@ -20,7 +20,7 @@ function selectNotice(num) {
 	var noticeNum=num;
 	
 	$.ajax({
-		url : "http://localhost:8080/naver/notice/select/"+noticeNum,
+		url : "http://localhost:8080/ROOT/notice/select/"+noticeNum,
 		cache : false,
 		contentType: "application/json",
 		processData : false,		
@@ -44,12 +44,12 @@ function fileDelete(fileNum,noticeNum){
 	var jsNoticeNum=noticeNum;
 	if(confirm("정말 삭제 하시겠습니까?")){
 		$.ajax({
-            url: "http://localhost:8080/naver/file/delete/"+jsFileNum,
+            url: "http://localhost:8080/ROOT/file/delete/"+jsFileNum,
             contentType: false,
             processData: false,
             type: 'post',
             success : function(data) {
-            	location.href="/naver/update-notice-form?num="+jsNoticeNum;
+            	location.href="/ROOT/update-notice-form?num="+jsNoticeNum;
             }
 		})	
 	}else{

@@ -3,7 +3,7 @@
  */
 
 var stompClient = null;
-var socket = new SockJS('/naver/hello');
+var socket = new SockJS('/ROOT/hello');
 stompClient = Stomp.over(socket);
 function mySubmit() {
 	console.log("asdf");
@@ -20,7 +20,7 @@ function mySubmit() {
 	console.log(id);
 	
 	$.ajax({
-        url: "http://localhost:8080/naver/notice/insert",
+        url: "http://localhost:8080/ROOT/notice/insert",
         contentType: false,
         processData: false,
         contentType: "application/json",
@@ -95,7 +95,7 @@ function upload(file,noticeNum,i,end,id){
 		form_data.append("file",file)          
 		form_data.append("noticeNum",noticeNum)
 		$.ajax({
-	            url: "http://localhost:8080/naver/file/upload",
+	            url: "http://localhost:8080/ROOT/file/upload",
 	            dataType: 'script',
 	            cache: false,
 	            contentType: false,
@@ -103,7 +103,7 @@ function upload(file,noticeNum,i,end,id){
 	            data: form_data,                         // Setting the data attribute of ajax with file_data
 	            type: 'post',
 	            success : function(data) {
-	            	post("/naver/notice", {id: userId});
+	            	post("/ROOT/notice", {id: userId});
 	            }
 	   })	
 	}else{
@@ -111,7 +111,7 @@ function upload(file,noticeNum,i,end,id){
 		form_data.append("file",file)          
 		form_data.append("noticeNum",noticeNum)
 		$.ajax({
-	            url: "http://localhost:8080/naver/file/upload",
+	            url: "http://localhost:8080/ROOT/file/upload",
 	            dataType: 'script',
 	            cache: false,
 	            contentType: false,

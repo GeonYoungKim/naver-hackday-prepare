@@ -1,4 +1,4 @@
-package com.hack.naver.service;
+package com.hack.naver.dao;
 
 import java.util.List;
 import java.util.Map;

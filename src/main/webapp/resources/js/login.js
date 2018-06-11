@@ -9,7 +9,7 @@ function login() {
 	var id=document.getElementById('id').value;
 	
 	$.ajax({
-        url: "http://localhost:8080/naver/login",
+        url: "http://localhost:8080/ROOT/login",
         contentType: false,
         processData: false,
         contentType: "application/json",
@@ -21,7 +21,7 @@ function login() {
     	}),                         // Setting the data attribute of ajax with file_data
         type: 'post',
         success : function(data) {
-        	post("/naver/notice", {id: id});
+        	post("/ROOT/notice", {id: id});
         }
 	});
 }

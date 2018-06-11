@@ -5,7 +5,6 @@
 	<groupId>com.hack</groupId>
 	<artifactId>naver</artifactId>
 	<name>NaverHack</name>
-	<packaging>war</packaging>
 	<version>1.0.0-BUILD-SNAPSHOT</version>
 	<properties>
 		<java-version>1.8</java-version>
@@ -218,7 +217,6 @@
 		</dependency>        
 	</dependencies>
     <build>
-    <finalName>ROOT</finalName>
         <plugins>
             <plugin>
                 <artifactId>maven-eclipse-plugin</artifactId>
@@ -247,19 +245,9 @@
                 </configuration>
             </plugin>
             <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <version>1.2.1</version>
-                <configuration>
-                    <mainClass>org.test.int1.Main</mainClass>
-                </configuration>
-            </plugin>
-            
-            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
                 <version>2.1.1</version>
- 
                 <configuration>
                     <warSourceDirectory>WebContent</warSourceDirectory>
                     <webXml>WebContent/WEB-INF/web.xml</webXml>
@@ -267,4 +255,5 @@
             </plugin>
         </plugins>
     </build>
+    <packaging>war</packaging>
 </project>

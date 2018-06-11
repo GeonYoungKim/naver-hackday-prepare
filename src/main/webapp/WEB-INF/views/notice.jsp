@@ -31,7 +31,7 @@
 <script>
 
 var stompClient = null;
-var socket = new SockJS('/naver/hello');
+var socket = new SockJS('/ROOT/hello');
 stompClient = Stomp.over(socket);
 
 
@@ -40,7 +40,7 @@ function chageLangSelect(id){
     var unitSelect = document.getElementById("unit");
     // select element에서 선택된 option의 value가 저장된다.
     var selectValue = unitSelect.options[unitSelect.selectedIndex].value;
-    post("/naver/notice", {id: id,no:1,unit:selectValue});
+    post("/ROOT/notice", {id: id,no:1,unit:selectValue});
     
 }
 function noticeUpdate(userId,num,noticeId){
@@ -53,7 +53,7 @@ function noticeUpdate(userId,num,noticeId){
 		alert("수정 권한이 없습니다.");
 	}else{
 		if(confirm("정말 수정 하시겠습니까?")){
-			location.href = "/naver/update-notice-form?num="+jsNum;
+			location.href = "/ROOT/update-notice-form?num="+jsNum;
 		}else{
 			alert("수정 취소 되었습니다.");
 		}
@@ -73,12 +73,12 @@ function noticeDelete(userId,num,noticeId,no,unit){
 	}else{
 		if(confirm("정말 삭제 하시겠습니까?")){
 			$.ajax({
-	            url: "http://localhost:8080/naver/notice/delete/"+jsNum,
+	            url: "http://localhost:8080/ROOT/notice/delete/"+jsNum,
 	            contentType: false,
 	            processData: false, // Setting the data attribute of ajax with file_data
 	            type: 'post',
 	            success : function(data) {
-	            	post("/naver/notice", {id: id,no:jsNo,unit:jsUnit});
+	            	post("/ROOT/notice", {id: id,no:jsNo,unit:jsUnit});
 	            }
 			})	
 		}else{
@@ -122,7 +122,7 @@ function showResult(message) {
 	console.log(userId);
 	
 		$.ajax({
-			url : "http://localhost:8080/naver/alarm/judge",
+			url : "http://localhost:8080/ROOT/alarm/judge",
 			contentType : false,
 			processData : false,
 			contentType : "application/json",
@@ -141,7 +141,7 @@ function showResult(message) {
 
 	function logout() {
 		disconnect();
-		location.href = "/naver/logout";
+		location.href = "/ROOT/logout";
 	}
 
 	function connect(alarm) {
@@ -150,7 +150,7 @@ function showResult(message) {
 		if (alarmFlag == "YES") {
 			alert("새로운 공지가 있습니다.");
 		}
-		var socket = new SockJS('/naver/hello');
+		var socket = new SockJS('/ROOT/hello');
 		stompClient = Stomp.over(socket);
 		stompClient.connect({}, function(frame) {
 
@@ -171,7 +171,7 @@ function connect(alarm) {
 	if (alarmFlag == "YES") {
 		alert("새로운 공지가 있습니다.");
 	}
-	var socket = new SockJS('/naver/hello');
+	var socket = new SockJS('/ROOT/hello');
 	stompClient = Stomp.over(socket);
 	stompClient.connect({}, function(frame) {
 
@@ -197,7 +197,7 @@ function connect(alarm) {
 		
 		<TR>
 			<td align="center" WIDTH="70"><a
-				href="/naver/notice-select?num=<%=((Integer) ((List<Map<String, Object>>) map.get("tableList")).get(i).get("num"))%>"><%=((List<Map<String, Object>>) map.get("tableList")).get(i).get("content")%></a></td>
+				href="/ROOT/notice-select?num=<%=((Integer) ((List<Map<String, Object>>) map.get("tableList")).get(i).get("num"))%>"><%=((List<Map<String, Object>>) map.get("tableList")).get(i).get("content")%></a></td>
 			<td align="center" WIDTH="70"><%=((List<Map<String, Object>>) map.get("tableList")).get(i).get("notice_element")%></td>
 			<td><button
 					onclick="noticeUpdate('<%=id%>','<%=((List<Map<String, Object>>) map.get("tableList")).get(i).get("num")%>','<%=((List<Map<String, Object>>) map.get("tableList")).get(i).get("user_id")%>')">수정</button></td>
@@ -214,7 +214,7 @@ function connect(alarm) {
 		%>
 		<tr>
 			<td><a href="javascript:void(0);"
-				onclick="post('/naver/notice', {id: '<%=id%>',no:'<%=before - 1%>',unit:'<%=unit%>'})"><%=beforeNo%></a></td>
+				onclick="post('/ROOT/notice', {id: '<%=id%>',no:'<%=before - 1%>',unit:'<%=unit%>'})"><%=beforeNo%></a></td>
 		</tr>
 		<%
 			}
@@ -225,14 +225,14 @@ function connect(alarm) {
 					if (((List) map.get("footerList")).get(i) == map.get("pagingNo")) {
 			%>
 			<td><a href="javascript:void(0);"
-				onclick="post('/naver/notice', {id: '<%=id%>',no:'<%=((List) map.get("footerList")).get(i)%>',unit:'<%=unit%>'})"><b><%=((List) map.get("footerList")).get(i)%></b></a>
+				onclick="post('/ROOT/notice', {id: '<%=id%>',no:'<%=((List) map.get("footerList")).get(i)%>',unit:'<%=unit%>'})"><b><%=((List) map.get("footerList")).get(i)%></b></a>
 				
 			</td>
 			<%
 				} else {
 			%>
 			<td><a href="javascript:void(0);"
-				onclick="post('/naver/notice', {id: '<%=id%>',no:'<%=((List) map.get("footerList")).get(i)%>',unit:'<%=unit%>'})"><%=((List) map.get("footerList")).get(i)%></a>
+				onclick="post('/ROOT/notice', {id: '<%=id%>',no:'<%=((List) map.get("footerList")).get(i)%>',unit:'<%=unit%>'})"><%=((List) map.get("footerList")).get(i)%></a>
 				
 			</td>
 			<%
@@ -246,10 +246,10 @@ function connect(alarm) {
 		<tr>
 			<td>
 			<a href="javascript:void(0);"
-				onclick="post('/naver/notice', {id: '<%=id%>',no:'<%=after + 1%>',unit:'<%=unit%>'})"><%=afterNo%></a></td>
+				onclick="post('/ROOT/notice', {id: '<%=id%>',no:'<%=after + 1%>',unit:'<%=unit%>'})"><%=afterNo%></a></td>
 				<%-- 
 			<a
-				href="/naver/notice/<%=id%>?no=<%=after + 1%>&unit=<%=unit%>"><%=afterNo%></a></td> --%>
+				href="/ROOT/notice/<%=id%>?no=<%=after + 1%>&unit=<%=unit%>"><%=afterNo%></a></td> --%>
 		</tr>
 		<%
 			}
@@ -271,6 +271,6 @@ function connect(alarm) {
 		</table>
 	</form>
 	<button type="submit"
-		onclick="location.href='/naver/insert-notice-form'">공지사항 추가</button>
+		onclick="location.href='/ROOT/insert-notice-form'">공지사항 추가</button>
 </body>
 </html>

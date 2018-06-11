@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSessionContext;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -33,10 +34,10 @@ public class RestAlarmController {
 	@Resource(name = "LoginService")
 	private LoginService loginService ;
 	
-	@RequestMapping(value = "/alarm/judge", method = RequestMethod.POST,produces="text/plain;charset=UTF-8")
+	@PostMapping("/alarm/judge")
 	public @ResponseBody String alarmJudge(@RequestBody Map<String,Object> data,HttpServletRequest request,HttpServletResponse response,HttpSession session) throws UnsupportedEncodingException {
 		
-		System.out.println("alarmJudge - POST");
+		System.out.println("alarmJudge - POST");	
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
 		

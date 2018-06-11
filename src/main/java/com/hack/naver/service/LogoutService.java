@@ -9,6 +9,7 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import com.hack.naver.dao.LogoutDao;
 import com.hack.naver.model.User;
 
 @Service("LogoutService")

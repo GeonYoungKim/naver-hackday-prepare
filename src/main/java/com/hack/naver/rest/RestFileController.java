@@ -16,7 +16,9 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,7 +32,7 @@ public class RestFileController {
 	@Resource(name = "FileService")
 	private FileService fileService;
 
-	@RequestMapping(value = "/file/upload", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
+	@PostMapping("/file/upload")
 	public void upload(MultipartHttpServletRequest mHttpServletRequest, HttpServletRequest request,HttpServletResponse response) throws UnsupportedEncodingException {
 		System.out.println("upload");
 
@@ -70,7 +72,7 @@ public class RestFileController {
 			}
 		}
 	}
-	@RequestMapping(value = "/file/download/{fileNum}")
+	@GetMapping("/file/download/{fileNum}")
 	public void download(HttpServletRequest request, HttpServletResponse response,@PathVariable("fileNum") String fileNum) throws UnsupportedEncodingException {
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
@@ -133,7 +135,7 @@ public class RestFileController {
 			e.printStackTrace();
 		}
 	}
-	@RequestMapping(value = "/file/delete/{num}", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
+	@PostMapping("/file/delete/{num}")
 	public void deleteFile(HttpServletRequest request, HttpServletResponse response,@PathVariable("num") int num) throws UnsupportedEncodingException {
 		System.out.println("noticeUpdate - POST");
 		request.setCharacterEncoding("UTF-8");

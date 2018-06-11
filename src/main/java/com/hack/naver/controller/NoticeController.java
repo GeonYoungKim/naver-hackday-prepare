@@ -11,11 +11,15 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.hack.naver.service.LoginService;
 import com.hack.naver.service.NoticeService;
@@ -29,33 +33,33 @@ public class NoticeController {
 	@Resource(name = "LoginService")
 	private LoginService loginService;
 	
-	@RequestMapping(value = "/insert-notice-form")
-	public String insertNoticeForm(HttpServletRequest request) {
-		return "insert_notice_form";
+	@GetMapping("/insert-notice-form")
+	public ModelAndView insertNoticeForm(ModelAndView modelAndView) {
+		modelAndView.setViewName("insert_notice_form");
+		return modelAndView;
 	}
 
-	@RequestMapping(value = "/update-notice-form")
-	public String updateNoticeForm(HttpServletRequest request, HttpServletResponse response,HttpSession session) throws UnsupportedEncodingException {
+	@GetMapping("/update-notice-form")
+	public ModelAndView updateNoticeForm(@RequestParam("num") int numParam,ModelAndView modelAndView,HttpSession session) throws UnsupportedEncodingException {
 		System.out.println("noticeUpdateForm - GET");
-		request.setCharacterEncoding("UTF-8");
-		response.setCharacterEncoding("UTF-8");
-
-		int num = Integer.parseInt(request.getParameter("num"));
-		request.setAttribute("id", session.getAttribute("userId"));
-		request.setAttribute("num", num);
-		return "update_notice_form";
+		modelAndView.setViewName("update_notice_form");
+		
+		modelAndView.addObject("id",session.getAttribute("userId"));
+		modelAndView.addObject("num", numParam);
+		
+		return modelAndView;
 	}
-	@RequestMapping(value = "/notice-select")
-	public String noticeSelect(HttpServletRequest request) throws UnsupportedEncodingException {
-		request.setCharacterEncoding("UTF-8");
-		String num=request.getParameter("num");
+	@GetMapping("/notice-select")
+	public ModelAndView noticeSelect(@RequestParam("num") String num,ModelAndView modelAndView) throws UnsupportedEncodingException {
+		modelAndView.setViewName("select_one_notice");
 		
 		Map<String,Object> map=noticeService.selectOneNotice(num);
-		request.setAttribute("selectOneNotice", map);
-		return "select_one_notice";
+		modelAndView.addObject("selectOneNotice",map);
+		
+		return modelAndView;
 		
 	}
-	@RequestMapping(value = "/notice", method = RequestMethod.POST,produces="text/plain;charset=UTF-8")
+	@PostMapping("/notice")
 	public String paging(HttpServletRequest request) {
 		String id=request.getParameter("id");
 		System.out.println("notice - POST");		

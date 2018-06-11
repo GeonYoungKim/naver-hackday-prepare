@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -33,7 +34,7 @@ public class RestNoticeController {
 	@Resource(name = "LoginService")
 	private LoginService loginService;
 
-	@RequestMapping(value = "/notice/insert", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
+	@PostMapping("/notice/insert")
 	public @ResponseBody String insertNotice(@RequestBody Map<String,Object> data,HttpServletRequest request) throws UnsupportedEncodingException {
 		System.out.println("noticeInsert - POST");
 		request.setCharacterEncoding("UTF-8");
@@ -55,7 +56,7 @@ public class RestNoticeController {
 		return noticeNum;
 	}
 	
-	@RequestMapping(value = "/notice/delete/{noticeNum}", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
+	@PostMapping("/notice/delete/{noticeNum}")
 	public void deleteNotice(HttpServletRequest request, HttpServletResponse response,@PathVariable("noticeNum") int noticeNum) throws UnsupportedEncodingException {
 		System.out.println("noticeDelete - POST");
 		request.setCharacterEncoding("UTF-8");
@@ -63,7 +64,7 @@ public class RestNoticeController {
 		noticeService.deleteNotice(noticeNum);
 	}
 	
-	@RequestMapping(value = "/notice/update/{num}", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
+	@PostMapping("/notice/update/{num}")
 	public void updateNotice(@RequestBody Map<String,Object> data,HttpServletRequest request, HttpServletResponse response,@PathVariable("num") int num) throws UnsupportedEncodingException {
 		System.out.println("noticeUpdate - POST");
 		request.setCharacterEncoding("UTF-8");
@@ -75,7 +76,7 @@ public class RestNoticeController {
 		
 	}
 	
-	@RequestMapping(value = "/notice/select/{num}", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
+	@PostMapping("/notice/select/{num}")
 	public @ResponseBody String selectNotice(HttpServletRequest request, HttpServletResponse response,@PathVariable("num") int num) throws UnsupportedEncodingException {
 		System.out.println("noticeUpdate - POST");
 		request.setCharacterEncoding("UTF-8");

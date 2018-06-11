@@ -6,7 +6,7 @@ function update() {
 	var content = document.getElementById('content').value;
 	var userId = document.getElementById('userId').value;
 	$.ajax({
-		url : "http://localhost:8080/naver/notice/update/" + num,
+		url : "http://localhost:8080/ROOT/notice/update/" + num,
 		cache : false,
 		contentType : "application/json",
 		processData : false,
@@ -70,7 +70,7 @@ function upload(file, noticeNum, i, end,id) {
 		form_data.append("file", file)
 		form_data.append("noticeNum", noticeNum)
 		$.ajax({
-			url : "http://localhost:8080/naver/file/upload",
+			url : "http://localhost:8080/ROOT/file/upload",
 			dataType : 'script',
 			cache : false,
 			contentType : false,
@@ -78,7 +78,7 @@ function upload(file, noticeNum, i, end,id) {
 			data : form_data, 
 			type : 'post',
 			success : function(data) {
-				post("/naver/notice", {id:userId});
+				post("/ROOT/notice", {id:userId});
 			}
 		})
 	} else {
@@ -86,7 +86,7 @@ function upload(file, noticeNum, i, end,id) {
 		form_data.append("file", file)
 		form_data.append("noticeNum", noticeNum)
 		$.ajax({
-			url : "http://localhost:8080/naver/file/upload",
+			url : "http://localhost:8080/ROOT/file/upload",
 			dataType : 'script',
 			cache : false,
 			contentType : false,

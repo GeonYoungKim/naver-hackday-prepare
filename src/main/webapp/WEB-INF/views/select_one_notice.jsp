@@ -27,7 +27,7 @@
 				String name = route.substring(route.lastIndexOf("\\") + 1);
 				int fileNum=Integer.parseInt(((Map) files.get(i)).get("file_num").toString());
 		%>
-		<li><a href="/naver/file/download/<%=fileNum%>"><%=name %></a></li>
+		<li><a href="/ROOT/file/download/<%=fileNum%>"><%=name %></a></li>
 		<%
 			}
 		%>
